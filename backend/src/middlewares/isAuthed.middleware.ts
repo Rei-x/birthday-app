@@ -14,7 +14,7 @@ const validateToken = (req: Request, res: Response, next: NextFunction) => {
     return;
   }
 
-  jwt.verify(token, config.SECRET, (err, decoded: TokenInterface | undefined) => {
+  jwt.verify(token, config.SECRET, (_err, decoded: TokenInterface | undefined) => {
     if (decoded) {
       res.locals.user = decoded.user;
       next();

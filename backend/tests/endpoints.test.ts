@@ -2,6 +2,8 @@ import request from 'supertest';
 import app from '../src/app';
 import 'jest-extended';
 
+jest.useFakeTimers();
+
 describe('Authentication', () => {
   let token: string;
 

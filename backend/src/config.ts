@@ -2,12 +2,35 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const PORT = process.env.PORT || 3000;
-const SECRET = process.env.SECRET || 'dog';
+class EnvError extends Error {
+  constructor(envVariableName: string) {
+    super(`${envVariableName} wasn't specified in environmental variables.`);
+  }
+}
 
-const config = {
-  PORT,
-  SECRET,
+interface EnvVariables {
+  DB_URL: string
+  SECRET: string
+  ORIGIN: string
+  PORT: string
+}
+
+const {
+  DB_URL, SECRET, ORIGIN, NODE_ENV, PORT,
+} = process.env;
+
+try {
+  if (!DB_URL) throw new EnvError('DB_URL');
+  if (!SECRET) throw new EnvError('SECRET');
+  if (!ORIGIN && NODE_ENV === 'production') throw new EnvError('ORIGIN');
+} catch (e) {
+  // eslint-disable-next-line no-console
+  console.error(e);
+  process.exit(1);
+}
+
+const CheckedEnvVariables: EnvVariables = {
+  DB_URL, SECRET, ORIGIN: ORIGIN || `localhost:${PORT}`, PORT: PORT || '3000',
 };
 
-export default config;
+export default CheckedEnvVariables;

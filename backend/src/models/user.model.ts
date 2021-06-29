@@ -1,11 +1,12 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
 
-interface UserInterface {
+interface UserInterface extends Document{
   username: string
   firstName: string
   lastName: string
-  avatar?: string
   role: 'user' | 'admin'
+  avatar?: string
+  greetingVideo?: string
 }
 
 const schema = new Schema<UserInterface>({
@@ -21,12 +22,13 @@ const schema = new Schema<UserInterface>({
     type: String,
     required: true,
   },
-  avatar: String,
   role: {
     type: String,
     enum: ['admin', 'user'],
     default: 'user',
   },
+  avatar: String,
+  greetingVideo: String,
 });
 
 const UserModel = model<UserInterface>('User', schema);

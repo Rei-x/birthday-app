@@ -16,6 +16,8 @@
         "@typescript-eslint"
     ],
     "rules": {
-        "consistent-return": "warn"
+        "consistent-return": "warn",
+        "@typescript-eslint/no-implied-eval": "off",
+        "no-underscore-dangle": "warn"
     }
 }

@@ -4,5 +4,6 @@ import { userController } from '../controllers';
 // eslint-disable-next-line new-cap
 const router = express.Router();
 
-router.get('/getToken', userController.register);
+router.post('/user', userController.post);
+router.patch('/user/:userId', userController.patch);
 export default router;

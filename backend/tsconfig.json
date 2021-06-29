@@ -6,6 +6,7 @@
     "module": "commonjs",
     "outDir": "build",
     /* Strict Type-Checking Options */
+    "allowJs": false,
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
@@ -19,14 +20,19 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    /* Module Resolution Options */
-    "moduleResolution": "node",
-    "baseUrl": "src/",
     "esModuleInterop": true,
     /* Experimental Options */
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     /* Advanced Options */
     "forceConsistentCasingInFileNames": true
-  }
+  },
+  "include": [
+    "src/**/*",
+    "tests/**/*",
+    "jest.config.js",
+  ],
+  "exclude": [
+    "build/**/*"
+  ]
 }

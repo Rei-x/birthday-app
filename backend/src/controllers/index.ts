@@ -1,4 +1,4 @@
-/* eslint-disable import/prefer-default-export */
-import userController from './user';
+import userController from './users.controller';
+import tokenController from './token.controller';
 
-export { userController };
+export { userController, tokenController };

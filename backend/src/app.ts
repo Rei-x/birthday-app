@@ -3,7 +3,9 @@ import morgan from 'morgan';
 import cors from 'cors';
 import { connectToDatabase } from './db';
 import config from './config';
-import { tokenRoute, docsRoute, userRoute } from './routes';
+import {
+  tokenRoute, docsRoute, userRoute, videoRoute,
+} from './routes';
 
 if (process.env.NODE_ENV !== 'test') {
   connectToDatabase(config.DB_URL);
@@ -16,7 +18,7 @@ app.use(express.json());
 app.use(morgan('dev'));
 app.use(cors());
 
-app.use('/api', [tokenRoute, userRoute]);
+app.use('/api', [tokenRoute, userRoute, videoRoute]);
 
 app.use('/docs', docsRoute);
 

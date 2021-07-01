@@ -1,29 +1,73 @@
 import request from 'supertest';
 import app from '../src/app';
-import { TokenModel, UserModel } from '../src/models';
+import { TokenModel, UserInterface } from '../src/models';
 import { closeConnectionToDatabase } from '../src/db';
-import { connectToMemoryDatabase, createTestUser } from './utils';
+import { connectToMemoryDatabase, createTestUser, getUserJWT } from './utils';
 import 'jest-extended';
 
 describe('Token', () => {
+  let adminUser: UserInterface;
+  let adminJWTToken: string;
+
   beforeAll(async () => {
     await connectToMemoryDatabase();
-    await createTestUser();
+    adminUser = await createTestUser('admin');
+    adminJWTToken = await getUserJWT(adminUser);
   });
+
   test('Creating token', async () => {
-    const user = await UserModel.findOne();
-    expect(user).not.toBeNull();
-    const response = await request(app).post('/api/redeemToken').send({ userId: user!.id });
+    const response = await request(app)
+      .post('/api/redeemToken')
+      .send({ userId: adminUser.id })
+      .set('Authorization', adminJWTToken);
+
     expect(response.status).toBe(200);
     expect(response.body?.token).not.toBeNull();
   });
+
+  test('Returns 401 when there is no token in headers', async () => {
+    const response = await request(app)
+      .post('/api/redeemToken')
+      .send({ userId: adminUser.id });
+
+    expect(response.status).toBe(401);
+    expect(response.body?.token).toBeUndefined();
+  });
+
+  test('Returns 401 when token is invalid', async () => {
+    const response = await request(app)
+      .post('/api/redeemToken')
+      .send({ userId: adminUser.id })
+      .set('Authorization', 'Bearer b4dT0k3n');
+
+    expect(response.status).toBe(401);
+    expect(response.body?.token).toBeUndefined();
+  });
+
+  test('Returns 401 with normal user JWT', async () => {
+    const normalUser = await createTestUser();
+    const normalUserJWTToken = await getUserJWT(normalUser);
+
+    const response = await request(app)
+      .post('/api/redeemToken')
+      .send({ userId: adminUser.id })
+      .set('Authorization', normalUserJWTToken);
+
+    expect(response.status).toBe(401);
+    expect(response.body?.token).toBeUndefined();
+  });
+
   test('Redeem token', async () => {
     const tokenData = await TokenModel.findOne();
+
     expect(tokenData).not.toBeNull();
+
     const response = await request(app).get(`/api/redeemToken/${tokenData!.token}`);
+
     expect(response.status).toBe(200);
     expect(response.body.JWT).toBeString();
   });
+
   afterAll(async () => {
     await closeConnectionToDatabase();
   });

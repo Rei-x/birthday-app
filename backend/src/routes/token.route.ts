@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { tokenController } from '../controllers';
+import { isAuthed } from '../middlewares';
 
 const router = Router();
 
@@ -37,7 +38,7 @@ const router = Router();
  *                  example: 543534512353049
  *
  */
-router.post('/redeemToken', tokenController.post);
+router.post('/redeemToken', isAuthed('admin'), tokenController.post);
 /**
  * @swagger
  * /redeemToken/{token}:

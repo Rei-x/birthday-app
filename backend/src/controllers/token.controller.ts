@@ -1,10 +1,9 @@
-import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
 import { body, param } from 'express-validator';
 import crypto from 'crypto';
 import { TokenModel, UserModel } from '../models';
-import config from '../config';
 import createRequestHandler from './createRequestHandler';
+import { generateJWT } from '../utils';
 
 const post = createRequestHandler(async (req: Request, res: Response) => {
   const { userId } = req.body;
@@ -25,22 +24,16 @@ const post = createRequestHandler(async (req: Request, res: Response) => {
 
 const get = createRequestHandler(async (req: Request, res: Response) => {
   const { tokenId } = req.params;
-  const tokenData = await TokenModel.find({ token: tokenId, isActive: true }, { limit: 1 }).populate('user').exec();
+  const tokenData = await TokenModel.findOne({ token: tokenId, isActive: true }).populate('user').exec();
 
-  if (tokenData.length !== 1) return res.status(404).json({ error: 'Token doesn\'t exist' });
-  return new Promise((resolve) => {
-    jwt.sign({
-      id: tokenData[0].user.id,
-      role: tokenData[0].user.role,
-    }, config.SECRET, async (err: Error | null, encoded: string | undefined) => {
-      if (encoded) {
-        res.json({ JWT: `Bearer ${encoded}` });
-      } else {
-        res.status(500).json(err);
-      }
-      resolve();
-    });
-  });
+  if (!tokenData) return res.sendStatus(404);
+
+  try {
+    const JWT = await generateJWT(tokenData.user);
+    return res.json({ JWT });
+  } catch (e) {
+    return res.sendStatus(500);
+  }
 }, param('tokenId').exists().withMessage('You must specify Token ID as url param'));
 
 export default { post, get };

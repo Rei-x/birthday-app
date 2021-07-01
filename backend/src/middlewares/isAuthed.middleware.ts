@@ -20,7 +20,7 @@ const validateToken = (requiredRole: 'admin' | 'user' = 'user') => (req: Request
 
     if ((requiredRole === 'user') || (requiredRole === 'admin' && requiredRole === role)) {
       const requestedUserId = req.params.userId;
-      if (requestedUserId) {
+      if (!requestedUserId) {
         next();
         return;
       }

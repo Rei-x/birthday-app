@@ -12,15 +12,17 @@ export const connectToMemoryDatabase = async () => {
   await connectToDatabase(url);
 };
 
-export const createTestUser = async () => {
-  const userData = <UserInterface>{ username: 'johnwalles', firstName: 'John', lastName: 'Walles' };
+export const createTestUser = async (role: 'user' | 'admin' = 'user') => {
+  const userData = <UserInterface>{
+    username: 'johnwalles', firstName: 'John', lastName: 'Walles', role,
+  };
   return UserModel.create(userData);
 };
 
 export const getUserJWT = async (user: UserInterface): Promise<string> => new Promise((resolve) => {
   jwt.sign(<JWTInterface>{
     userId: user.id,
-    role: 'user',
+    role: user.role,
   }, config.SECRET, (_err, encoded) => {
     resolve(`Bearer ${encoded}`);
   });

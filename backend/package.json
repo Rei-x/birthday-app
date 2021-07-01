@@ -4,10 +4,10 @@
   "private": true,
   "main": "./build/app.js",
   "scripts": {
-    "lint": "eslint .",
-    "build": "npm run lint && tsc",
+    "prebuild": "rimraf build/",
+    "build": "tsc -p tsconfig-build.json",
     "run": "ts-node-dev src/server.ts",
-    "test": "jest --bail --detectOpenHandles --forceExit"
+    "test": "jest --bail --detectOpenHandles --forceExit --collect-coverage"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -40,6 +40,7 @@
     "jest": "^27.0.5",
     "jest-extended": "^0.11.5",
     "mongodb-memory-server": "^6.9.6",
+    "rimraf": "^3.0.2",
     "supertest": "^6.1.3",
     "ts-jest": "^27.0.3",
     "ts-node-dev": "^1.1.6",

@@ -2,3 +2,5 @@
 node_modules
 .vscode
 *.mp4
+build
+coverage

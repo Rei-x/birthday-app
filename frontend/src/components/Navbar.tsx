@@ -5,7 +5,7 @@ import {
 import logo from '../assets/18Barka.png';
 
 const Navigation = () => (
-  <Navbar variant="dark" bg="dark" expand="lg">
+  <Navbar variant="dark" bg="dark" expand="lg" className="fixed-top">
     <Container>
       <Navbar.Brand href="#home">
         <img src={logo} alt="logo" width="150" />

@@ -1,32 +1,41 @@
-import React from 'react';
-import {
-  Button, Col, Container, Row,
-} from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import './app.scss';
+import { LoginView, MainView, TokenView } from './views';
+import { UserContext } from './contexts';
+import { UserContextInterface } from './interfaces';
 
 function App() {
-  return (
-    <>
-      <Navbar />
-      <Container>
-        <Row className="justify-content-center mt-5">
-          <Col xs={12} sm={6} className="mt-3 text-center">
-            <h1 className="fw-bolder">Hejka Karol!</h1>
-            <p>Obejrzyj film poniżej.</p>
-            <p />
-            <Button>Hello</Button>
-          </Col>
-          <Col className="mt-3 mt-5-xs justify-content-center d-flex">
-            <video controls width="480" height="640">
-              <source src="http://localhost:4000/api/video/123" type="video/mp4" />
-            </video>
+  const [context, setContext] = useState<UserContextInterface>({});
 
-            <iframe title="Karol" src="https://drive.google.com/file/d/1Yxu6_wOYgO8oekURvTI9H8jh023nJnVr/preview" width="480" height="640" />
-          </Col>
-        </Row>
-      </Container>
-    </>
+  useEffect(() => {
+    const JWT = localStorage.getItem('JWT');
+    if (!context.JWT) {
+      if (JWT) setContext({ JWT });
+    }
+    if (context.JWT && context.JWT !== JWT) {
+      localStorage.setItem('JWT', context.JWT);
+    }
+  }, [context]);
+
+  return (
+    <UserContext.Provider value={[context, setContext]}>
+      <Router>
+        <Navbar />
+        <Switch>
+          <Route path="/token/:tokenId">
+            <TokenView />
+          </Route>
+          <Route path="/admin/">
+            <LoginView />
+          </Route>
+          <Route path="/">
+            <MainView />
+          </Route>
+        </Switch>
+      </Router>
+    </UserContext.Provider>
   );
 }
 

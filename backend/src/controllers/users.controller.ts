@@ -46,7 +46,7 @@ const patch = createRequestHandler(async (req, res) => {
   res.sendStatus(200);
 }, oneOf([...createUserValidator,
   body('avatar').isURL(),
-  body('greetingVideo').isURL(),
+  body('greetingVideo').isString(),
   body('role').isIn(['admin', 'user']).withMessage('Role must be user or admin'),
 ]));
 

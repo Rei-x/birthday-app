@@ -1,8 +1,7 @@
-import express from 'express';
+import { Router } from 'express';
 import { userController } from '../controllers';
 
-// eslint-disable-next-line new-cap
-const router = express.Router();
+const router = Router();
 
 router.post('/user', userController.post);
 router.patch('/user/:userId', userController.patch);

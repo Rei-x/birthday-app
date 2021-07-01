@@ -1,11 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import { JWTInterface } from '../interfaces';
 import config from '../config';
-
-interface JWTInterface {
-  userId?: string;
-  role?: string
-}
 
 const validateToken = (requiredRole: 'admin' | 'user' = 'user') => (req: Request, res: Response, next: NextFunction) => {
   const token = req.headers.authorization?.split(' ')[1];
@@ -23,7 +19,7 @@ const validateToken = (requiredRole: 'admin' | 'user' = 'user') => (req: Request
     res.locals.user = decoded;
 
     if ((requiredRole === 'user') || (requiredRole === 'admin' && requiredRole === role)) {
-      const { requestedUserId } = req.params;
+      const requestedUserId = req.params.userId;
       if (requestedUserId) {
         next();
         return;

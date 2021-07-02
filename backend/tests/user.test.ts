@@ -10,10 +10,9 @@ describe('User', () => {
 
   beforeAll(async () => {
     await connectToMemoryDatabase();
-    const adminUser = await createTestUser('admin');
+    const adminUser = await createTestUser({ username: 'adminUser', role: 'admin' });
     adminJWTToken = await getUserJWT(adminUser);
   });
-
   test('Creating user', async () => {
     const user = {
       username: 'Thinger',
@@ -29,6 +28,23 @@ describe('User', () => {
       ['firstName', user.firstName],
       ['lastName', user.lastName],
     ]);
+  });
+
+  test('Listing users', async () => {
+    const response = await request(app).get('/api/user').set('Authorization', adminJWTToken);
+    expect(response.status).toBe(200);
+    expect(response.body).toContainAllKeys([
+      'docs',
+      'totalDocs',
+      'offset',
+      'limit',
+      'totalPages',
+      'page',
+      'pagingCounter',
+      'hasPrevPage',
+      'hasNextPage',
+      'prevPage',
+      'nextPage']);
   });
 
   test('Updating user', async () => {
@@ -54,6 +70,7 @@ describe('User', () => {
     const updatedUser = await UserModel.findById(user!.id);
 
     expect(updatedUser).not.toBeNull();
+    console.log(updatedUser);
     expect(updatedUser!.avatar).toBe(newData.avatar);
     expect(updatedUser!.greetingVideo).toBe(newData.greetingVideo);
   });

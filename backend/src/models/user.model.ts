@@ -1,6 +1,9 @@
-import { Schema, model, Document } from 'mongoose';
+import {
+  Schema, model, Document, PaginateModel,
+} from 'mongoose';
+import mongoosePaginate from 'mongoose-paginate-v2';
 
-interface UserInterface extends Document{
+interface UserInterface extends Document<UserInterface>{
   username: string
   firstName: string
   lastName: string
@@ -10,7 +13,7 @@ interface UserInterface extends Document{
   greetingVideo?: string
 }
 
-const schema = new Schema<UserInterface>({
+const schema = new Schema({
   username: {
     type: String,
     required: true,
@@ -34,6 +37,8 @@ const schema = new Schema<UserInterface>({
   greetingVideo: String,
 });
 
-const UserModel = model<UserInterface>('User', schema);
+schema.plugin(mongoosePaginate);
+
+const UserModel: PaginateModel<UserInterface> = model<UserInterface, PaginateModel<UserInterface>>('User', schema);
 
 export { UserModel, UserInterface };

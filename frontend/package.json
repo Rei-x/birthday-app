@@ -39,7 +39,7 @@
       "airbnb-typescript"
     ],
     "parserOptions": {
-      "project": "./tsconfig.json"
+      "project": "./frontend/tsconfig.json"
     },
     "rules": {
       "jsx-a11y/media-has-caption": "off"

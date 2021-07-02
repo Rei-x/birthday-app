@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { MongoMemoryServer } from 'mongodb-memory-server';
+import bcrypt from 'bcryptjs';
 import { connectToDatabase } from '../../src/db';
 import { UserInterface, UserModel } from '../../src/models';
 import { JWTInterface } from '../../src/interfaces';
@@ -12,10 +13,31 @@ export const connectToMemoryDatabase = async () => {
   await connectToDatabase(url);
 };
 
-export const createTestUser = async (role: 'user' | 'admin' = 'user') => {
-  const userData = <UserInterface>{
-    username: 'johnwalles', firstName: 'John', lastName: 'Walles', role,
+interface TestUserInterface{
+  username?: string,
+  firstName?: string,
+  lastName?: string,
+  role?: 'user' | 'admin',
+  password?: string
+}
+
+export const createTestUser = async (testUser?: TestUserInterface) => {
+  let passwordHash;
+  const password = testUser?.password;
+
+  if (password && testUser?.role === 'user') throw new Error('Only admins can log in using password');
+  if (password) passwordHash = await bcrypt.hash((password as string), 5);
+
+  const userData = {
+    username: 'johnwalles',
+    firstName: 'John',
+    lastName: 'Walles',
+    role: 'user',
+    ...testUser,
+    password: undefined,
+    passwordHash,
   };
+
   return UserModel.create(userData);
 };
 

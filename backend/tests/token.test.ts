@@ -11,7 +11,7 @@ describe('Token', () => {
 
   beforeAll(async () => {
     await connectToMemoryDatabase();
-    adminUser = await createTestUser('admin');
+    adminUser = await createTestUser({ username: 'adminUser', role: 'admin' });
     adminJWTToken = await getUserJWT(adminUser);
   });
 
@@ -44,7 +44,7 @@ describe('Token', () => {
     expect(response.body?.token).toBeUndefined();
   });
 
-  test('Returns 401 with normal user JWT', async () => {
+  test('Returns 403 with normal user JWT', async () => {
     const normalUser = await createTestUser();
     const normalUserJWTToken = await getUserJWT(normalUser);
 
@@ -53,7 +53,7 @@ describe('Token', () => {
       .send({ userId: adminUser.id })
       .set('Authorization', normalUserJWTToken);
 
-    expect(response.status).toBe(401);
+    expect(response.status).toBe(403);
     expect(response.body?.token).toBeUndefined();
   });
 

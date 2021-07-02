@@ -19,7 +19,7 @@ const LoginView = () => {
   const history = useHistory();
 
   useEffect(() => {
-    if (context.user) history.push('/admin');
+    if (context.JWT) history.push('/admin');
   }, [context, history]);
 
   const handleSubmit = async (e: FormEvent) => {

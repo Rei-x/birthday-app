@@ -7,7 +7,7 @@ import { generateJWT } from '../utils';
 const post = createRequestHandler(async (req, res) => {
   const { username, password } = req.body;
 
-  const user = await UserModel.findOne({ username }, 'passwordHash');
+  const user = await UserModel.findOne({ username }, 'passwordHash role');
 
   if (!user?.passwordHash) {
     res.sendStatus(404);

@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { getOffsetFromPage, paginationOptions } from '../../db';
 import { UserModel } from '../../models';
 
-const get = async (req: Request, res: Response) => {
+const list = async (req: Request, res: Response) => {
   const { page } = req.query;
 
   const offset = getOffsetFromPage(<string>page || 1);
@@ -15,4 +15,4 @@ const get = async (req: Request, res: Response) => {
   }
 };
 
-export default get;
+export default list;

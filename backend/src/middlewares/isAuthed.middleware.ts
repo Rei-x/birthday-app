@@ -18,9 +18,10 @@ const onlyAdminFieldsAreInRequest = (req: Request): boolean => {
 };
 
 // eslint-disable-next-line max-len
-const userRequestsHisUserId = (req: Request, res: Response): boolean => req.params.userId === res.locals.user.userId;
+const userRequestsHisUserId = (req: Request, res: Response): boolean => req.params.userId === res.locals.user.id;
 
 const userHasPermission = (req: Request, res: Response, requiredRole: 'admin' | 'user'): boolean => {
+  console.log(res.locals.user.role);
   if (res.locals.user.role === 'admin') return true;
   if (res.locals.user.role === 'user' && requiredRole === 'admin') return false;
   if (onlyAdminFieldsAreInRequest(req)) return false;

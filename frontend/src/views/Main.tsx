@@ -12,14 +12,18 @@ const MainView = () => {
         <Row className="justify-content-center">
           <Col xs={12} sm={6} className="text-center vertical-center flex-column justify-content-center">
             <div>
-              <h1 className="fw-bolder">Hejka Karol!</h1>
+              <h1 className="fw-bolder">
+                Hejka
+                {' '}
+                {context.user.firstName}
+              </h1>
               <p>Obejrzyj film poniżej.</p>
               <Button>Hello</Button>
             </div>
           </Col>
-          <Col className="mt-3 mt-5-xs justify-content-center d-flex">
+          <Col className="mt-3 mt-5-xs vertical-center flex-column justify-content-center">
             <video controls width="480" height="640">
-              <source src="http://localhost:4000/api/video/123" type="video/mp4" />
+              <source src={`http://localhost:4000/api/video/${context.user._id}`} type="video/mp4" />
             </video>
           </Col>
         </Row>

@@ -13,6 +13,7 @@
     "bootstrap": "^5.0.2",
     "bootswatch": "^5.0.2",
     "dotenv": "^10.0.0",
+    "jwt-decode": "^3.1.2",
     "ky": "^0.28.5",
     "node-sass": "^6.0.1",
     "react": "^17.0.2",
@@ -39,10 +40,11 @@
       "airbnb-typescript"
     ],
     "parserOptions": {
-      "project": "./frontend/tsconfig.json"
+      "project": "./tsconfig.json"
     },
     "rules": {
-      "jsx-a11y/media-has-caption": "off"
+      "jsx-a11y/media-has-caption": "off",
+      "no-underscore-dangle": "off"
     }
   },
   "browserslist": {

@@ -1,5 +1,5 @@
 import MainView from './Main';
 import TokenView from './Token';
-import LoginView from './Login';
+import AdminView from './Admin';
 
-export { MainView, TokenView, LoginView };
+export { MainView, TokenView, AdminView };

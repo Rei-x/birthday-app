@@ -8,6 +8,11 @@ const one = createRequestHandler(async (req: Request, res: Response) => {
 
   const user = await UserModel.findById(userId);
 
+  if (!user) {
+    res.sendStatus(404);
+    return;
+  }
+
   res.json(user);
 }, param('userId').exists().withMessage('You must specify user id'));
 

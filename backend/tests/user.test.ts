@@ -30,6 +30,21 @@ describe('User', () => {
     ]);
   });
 
+  test('Getting one user', async () => {
+    const user = await UserModel.findOne();
+
+    expect(user).not.toBeUndefined();
+
+    const response = await request(app).get(`/api/user/${user!.id}`).set('Authorization', adminJWTToken);
+    expect(response.status).toBe(200);
+    expect(response.body).toContainEntries([
+      ['username', user!.username],
+      ['role', user!.role],
+      ['firstName', user!.firstName],
+      ['lastName', user!.lastName],
+    ]);
+  });
+
   test('Listing users', async () => {
     const response = await request(app).get('/api/user').set('Authorization', adminJWTToken);
     expect(response.status).toBe(200);
@@ -70,7 +85,6 @@ describe('User', () => {
     const updatedUser = await UserModel.findById(user!.id);
 
     expect(updatedUser).not.toBeNull();
-    console.log(updatedUser);
     expect(updatedUser!.avatar).toBe(newData.avatar);
     expect(updatedUser!.greetingVideo).toBe(newData.greetingVideo);
   });

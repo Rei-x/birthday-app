@@ -1,6 +1,6 @@
 .env
 node_modules
 .vscode
-*.mp4
+uploads
 build
 coverage

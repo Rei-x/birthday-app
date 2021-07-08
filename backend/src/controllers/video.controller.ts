@@ -4,17 +4,18 @@ import fs from 'fs';
 import { UserModel } from '../models';
 import createRequestHandler from './createRequestHandler';
 
+const userIdValidator = param('userId').isString().withMessage("UserId wasn't declared");
+
 const get = createRequestHandler(async (req: Request, res: Response) => {
   const { userId } = req.params;
   const user = await UserModel.findById(userId);
 
-  if (!user?.greetingVideo) {
+  if (!user?.video) {
     res.sendStatus(404);
     return;
   }
 
-  const path = 'videos';
-  const videoPath = `${path}/${user.greetingVideo}`;
+  const videoPath = user.video;
 
   fs.stat(videoPath, (err, stat) => {
     if (err !== null && err.code === 'ENOENT') {
@@ -52,6 +53,14 @@ const get = createRequestHandler(async (req: Request, res: Response) => {
       fs.createReadStream(videoPath).pipe(res);
     }
   });
-}, param('userId').isString().withMessage("UserId wasn't declared"));
+}, { validators: userIdValidator });
 
-export default { get };
+const head = createRequestHandler(async (req: Request, res: Response) => {
+  const { userId } = req.params;
+  const user = await UserModel.findById(userId);
+
+  if (!user?.video) res.sendStatus(404);
+  else res.sendStatus(200);
+}, { validators: userIdValidator });
+
+export default { get, head };

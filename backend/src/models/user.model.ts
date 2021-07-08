@@ -10,7 +10,7 @@ interface UserInterface extends Document<UserInterface>{
   role: 'user' | 'admin'
   passwordHash?: string
   avatar?: string
-  greetingVideo?: string
+  video?: string
 }
 
 const schema = new Schema({
@@ -33,8 +33,11 @@ const schema = new Schema({
     default: 'user',
   },
   passwordHash: String,
-  avatar: String,
-  greetingVideo: String,
+  avatar: {
+    type: String,
+    default: 'uploads/defaultuser.png',
+  },
+  video: String,
 });
 
 schema.plugin(mongoosePaginate);

@@ -26,6 +26,6 @@ const post = createRequestHandler(async (req, res) => {
     return;
   }
   res.sendStatus(403);
-}, [body('username').isString(), body('password').isString()]);
+}, { validators: [body('username').isString(), body('password').isString()] });
 
 export default { post };

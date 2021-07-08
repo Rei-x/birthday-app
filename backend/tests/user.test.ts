@@ -1,4 +1,5 @@
 import request from 'supertest';
+import rimraf from 'rimraf';
 import app from '../src/app';
 import { UserModel } from '../src/models';
 import 'jest-extended';
@@ -13,6 +14,8 @@ describe('User', () => {
     const adminUser = await createTestUser({ username: 'adminUser', role: 'admin' });
     adminJWTToken = await getUserJWT(adminUser);
   });
+
+  jest.setTimeout(10000);
   test('Creating user', async () => {
     const user = {
       username: 'Thinger',
@@ -20,7 +23,15 @@ describe('User', () => {
       lastName: 'Gardner',
     };
 
-    const response = await request(app).post('/api/user').send(user).set('Authorization', adminJWTToken);
+    const response = await request(app)
+      .post('/api/user')
+      .field('username', user.username)
+      .field('firstName', user.firstName)
+      .field('lastName', user.lastName)
+      .set('Authorization', adminJWTToken)
+      .attach('avatar', 'tests/static/test.jpg')
+      .attach('video', 'tests/static/test.mp4');
+
     expect(response.status).toBe(200);
     expect(response.body).toContainEntries([
       ['username', user.username],
@@ -69,14 +80,10 @@ describe('User', () => {
 
     const userJWTToken = await getUserJWT(user!);
 
-    const newData = {
-      avatar: 'https://picsum.photos/200',
-      greetingVideo: 'dolly_gardner.mp4',
-    };
-
     const response = await request(app)
       .patch(`/api/user/${user!.id}`)
-      .send(newData)
+      .attach('avatar', 'tests/static/test.jpg')
+      .attach('video', 'tests/static/test.mp4')
       .set('Authorization', userJWTToken);
 
     expect(response.status).toBe(200);
@@ -85,8 +92,8 @@ describe('User', () => {
     const updatedUser = await UserModel.findById(user!.id);
 
     expect(updatedUser).not.toBeNull();
-    expect(updatedUser!.avatar).toBe(newData.avatar);
-    expect(updatedUser!.greetingVideo).toBe(newData.greetingVideo);
+    expect(updatedUser!.avatar).not.toBe(user!.avatar);
+    expect(updatedUser!.video).not.toBe(user!.video);
   });
 
   test('Failing when trying to update other user without permission', async () => {
@@ -116,5 +123,6 @@ describe('User', () => {
 
   afterAll(async () => {
     await closeConnectionToDatabase();
+    rimraf.sync('uploads');
   });
 });

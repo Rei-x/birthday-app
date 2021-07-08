@@ -14,6 +14,8 @@ const one = createRequestHandler(async (req: Request, res: Response) => {
   }
 
   res.json(user);
-}, param('userId').exists().withMessage('You must specify user id'));
+}, {
+  validators: param('userId').exists().withMessage('You must specify user id'),
+});
 
 export default one;

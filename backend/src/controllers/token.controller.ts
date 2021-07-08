@@ -16,24 +16,27 @@ const post = createRequestHandler(async (req: Request, res: Response) => {
     user: user._id,
   });
   return res.json({ token: hash });
-}, [body('userId')
-  .isString()
-  .withMessage('User ID must be a string')
-  .isLength({ min: 4 })
-  .withMessage('User ID must be longer than 4 characters')]);
+}, {
+  validators: body('userId')
+    .isString()
+    .withMessage('User ID must be a string')
+    .isLength({ min: 4 })
+    .withMessage('User ID must be longer than 4 characters'),
+});
 
 const get = createRequestHandler(async (req: Request, res: Response) => {
   const { tokenId } = req.params;
-  const tokenData = await TokenModel.findOne({ token: tokenId, isActive: true }).populate('user').exec();
+  const token = await TokenModel.findOne({ token: tokenId, isActive: true }).populate('user').exec();
 
-  if (!tokenData) return res.sendStatus(404);
+  if (!token) return res.sendStatus(404);
 
   try {
-    const JWT = await generateJWT(tokenData.user);
+    const JWT = await generateJWT(token.user);
+    await token.update({ isActive: false });
     return res.json({ JWT });
   } catch (e) {
     return res.sendStatus(500);
   }
-}, param('tokenId').exists().withMessage('You must specify Token ID as url param'));
+}, { validators: param('tokenId').exists().withMessage('You must specify Token ID as url param') });
 
 export default { post, get };

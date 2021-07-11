@@ -94,6 +94,9 @@ describe('User', () => {
     expect(updatedUser).not.toBeNull();
     expect(updatedUser!.avatar).not.toBe(user!.avatar);
     expect(updatedUser!.video).not.toBe(user!.video);
+    expect(updatedUser!.username).toBe(user!.username);
+    expect(updatedUser!.firstName).toBe(user!.firstName);
+    expect(updatedUser!.lastName).toBe(user!.lastName);
   });
 
   test('Failing when trying to update other user without permission', async () => {

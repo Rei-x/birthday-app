@@ -9,17 +9,36 @@ const createUserValidator: ValidationChain[] = [
   body('lastName').isString().isLength({ min: 3 }).optional(),
 ];
 
+const deleteUndefinedValuesFromObject = (obj: Record<string, any>) => {
+  const objectCopy = { ...obj };
+  Object.keys(objectCopy).forEach((key) => {
+    if (objectCopy[key] === undefined) {
+      delete objectCopy[key];
+    }
+  });
+  return objectCopy;
+};
+
 const patch = createRequestHandler(async (req, res) => {
   const { userId } = req.params;
   const {
-    username, firstName, lastName, role,
+    username, firstName, lastName,
   } = req.body;
   const { avatar, video } = (req.files as unknown as {
     [fieldname: string]: Express.Multer.File[]; });
 
-  await UserModel.findByIdAndUpdate(userId, {
-    username, firstName, lastName, role, avatar: avatar[0].path, video: video[0].path,
-  });
+  let avatarFilePath;
+  let videoFilePath;
+  if (Array.isArray(avatar)) avatarFilePath = avatar[0].path;
+  if (Array.isArray(video)) videoFilePath = video[0].path;
+
+  const newData: Record<string, any> = {
+    username, firstName, lastName, avatar: avatarFilePath, video: videoFilePath,
+  };
+
+  const parsedData = deleteUndefinedValuesFromObject(newData);
+
+  await UserModel.findByIdAndUpdate(userId, parsedData);
 
   res.sendStatus(200);
 }, {

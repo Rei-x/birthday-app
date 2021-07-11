@@ -6,7 +6,7 @@ import createRequestHandler from './createRequestHandler';
 const post = createRequestHandler(async (req, res) => {
   const { pin } = req.body;
 
-  const pinData = await PinModel.findOne({ pin }).populate('author').exec();
+  const pinData = await PinModel.findOne({ pin }).populate('user').exec();
 
   if (!pinData) {
     res.sendStatus(404);

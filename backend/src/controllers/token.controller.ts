@@ -3,7 +3,7 @@ import { body, param } from 'express-validator';
 import crypto from 'crypto';
 import { TokenModel, UserModel } from '../models';
 import createRequestHandler from './createRequestHandler';
-import { generateJWT } from '../utils';
+import { PinModel } from '../models/pin.model';
 
 const post = createRequestHandler(async (req: Request, res: Response) => {
   const { userId } = req.body;
@@ -30,11 +30,21 @@ const get = createRequestHandler(async (req: Request, res: Response) => {
 
   if (!token) return res.sendStatus(404);
 
+  const generateRandomSixDigitNumber = () => Math.floor(100000 + Math.random() * 900000);
+
   try {
-    const JWT = await generateJWT(token.user);
+    const pin = generateRandomSixDigitNumber();
+
+    await PinModel.create({
+      pin,
+      user: token.user._id,
+    });
+
     await token.update({ isActive: false });
-    return res.json({ JWT });
+
+    return res.json({ pin });
   } catch (e) {
+    console.error(e);
     return res.sendStatus(500);
   }
 }, { validators: param('tokenId').exists().withMessage('You must specify Token ID as url param') });

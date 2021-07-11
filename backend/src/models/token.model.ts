@@ -4,7 +4,6 @@ import { UserInterface } from './user.model';
 interface TokenInterface extends Document{
   token: string
   user: UserInterface
-  createdAt: Date
   isActive: boolean
   validUntil?: Date
 }
@@ -12,7 +11,6 @@ interface TokenInterface extends Document{
 const schema = new Schema<TokenInterface>({
   token: { required: true, type: String },
   user: { type: Schema.Types.ObjectId, ref: 'User' },
-  createdAt: { required: true, type: Date, default: Date.now },
   isActive: { required: true, type: Boolean, default: true },
   validUntil: Date,
 });

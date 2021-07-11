@@ -10,7 +10,9 @@ const createValidator = (validators: Array<ValidationChain> | ValidationChain) =
   return [validators, checkValidation];
 };
 
-const generateJWT = async (user: UserInterface) => new Promise((resolve, reject) => {
+const generateJWT = async (
+  user: UserInterface,
+): Promise<string> => new Promise((resolve, reject) => {
   jwt.sign({
     id: user.id,
     role: user.role,

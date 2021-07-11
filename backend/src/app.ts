@@ -4,7 +4,7 @@ import cors from 'cors';
 import { connectToDatabase } from './db';
 import config from './config';
 import {
-  tokenRoute, docsRoute, userRoute, videoRoute, adminRoute,
+  tokenRoute, docsRoute, userRoute, videoRoute, adminRoute, pinRoute,
 } from './routes';
 
 if (process.env.NODE_ENV !== 'test') {
@@ -20,7 +20,7 @@ app.use(cors({
   origin: config.ORIGIN,
 }));
 
-app.use('/api', [tokenRoute, userRoute, videoRoute, adminRoute]);
+app.use('/api', [tokenRoute, userRoute, videoRoute, adminRoute, pinRoute]);
 
 app.use('/docs', docsRoute);
 

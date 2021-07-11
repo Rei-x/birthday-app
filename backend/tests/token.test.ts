@@ -65,7 +65,7 @@ describe('Token', () => {
     const response = await request(app).get(`/api/redeemToken/${tokenData!.token}`);
 
     expect(response.status).toBe(200);
-    expect(response.body.JWT).toBeString();
+    expect(response.body.pin).toBeWithin(100000, 999999);
   });
 
   afterAll(async () => {

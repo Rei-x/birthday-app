@@ -6,6 +6,14 @@ import createRequestHandler from './createRequestHandler';
 
 const userIdValidator = param('userId').isString().withMessage("UserId wasn't declared");
 
+const head = createRequestHandler(async (req: Request, res: Response) => {
+  const { userId } = req.params;
+  const user = await UserModel.findById(userId);
+
+  if (!user?.video) res.sendStatus(404);
+  else res.sendStatus(200);
+}, { validators: userIdValidator });
+
 const get = createRequestHandler(async (req: Request, res: Response) => {
   const { userId } = req.params;
   const user = await UserModel.findById(userId);
@@ -34,33 +42,25 @@ const get = createRequestHandler(async (req: Request, res: Response) => {
 
       const chunksize = (end - start) + 1;
       const file = fs.createReadStream(videoPath, { start, end });
-      const head = {
+      const headers = {
         'Content-Range': `bytes ${start}-${end}/${fileSize}`,
         'Accept-Ranges': 'bytes',
         'Content-Length': chunksize,
         'Content-Type': 'video/mp4',
       };
 
-      res.writeHead(206, head);
+      res.writeHead(206, headers);
       file.pipe(res);
     } else {
-      const head = {
+      const headers = {
         'Content-Length': fileSize,
         'Content-Type': 'video/mp4',
       };
 
-      res.writeHead(200, head);
+      res.writeHead(200, headers);
       fs.createReadStream(videoPath).pipe(res);
     }
   });
 }, { validators: userIdValidator });
 
-const head = createRequestHandler(async (req: Request, res: Response) => {
-  const { userId } = req.params;
-  const user = await UserModel.findById(userId);
-
-  if (!user?.video) res.sendStatus(404);
-  else res.sendStatus(200);
-}, { validators: userIdValidator });
-
-export default { get, head };
+export default { head, get };

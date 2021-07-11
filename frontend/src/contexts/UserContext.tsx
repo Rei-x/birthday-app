@@ -1,11 +1,11 @@
 import React from 'react';
-import { UserContextInterface } from '../interfaces';
+import { GlobalContext } from '../interfaces';
 
 const UserContext = React.createContext<[
-  UserContextInterface,
-  React.Dispatch<React.SetStateAction<UserContextInterface>>,
-] | [UserContextInterface, null]>(
-  [{}, null],
+  GlobalContext,
+  React.Dispatch<React.SetStateAction<GlobalContext>>,
+] | [GlobalContext, null]>(
+  [{ addNotification: () => { } }, null],
 );
 
 export default UserContext;

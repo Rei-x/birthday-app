@@ -1,11 +1,24 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import {
   Button, Col, Container, Row,
 } from 'react-bootstrap';
+import { Redirect } from 'react-router-dom';
 import { UserContext } from '../contexts';
+import { useApi } from '../hooks';
 
 const MainView = () => {
   const [context] = useContext(UserContext);
+  const [,api] = useApi(context);
+  const [hasVideo, setHasVideo] = useState(false);
+
+  useEffect(() => {
+    const updateVideoStatus = async () => {
+      const result = await api?.checkForVideo();
+      setHasVideo(result || false);
+    };
+    updateVideoStatus();
+  }, [api]);
+
   return (
     <Container>
       { context.user ? (
@@ -17,22 +30,20 @@ const MainView = () => {
                 {' '}
                 {context.user.firstName}
               </h1>
-              <p>Obejrzyj film poniżej.</p>
+              {hasVideo && <p>Obejrzyj film poniżej.</p>}
               <Button>Hello</Button>
             </div>
           </Col>
+          { hasVideo && (
           <Col className="mt-3 mt-5-xs vertical-center flex-column justify-content-center">
-            <video controls width="480" height="640">
-              <source src={`http://localhost:4000/api/video/${context.user._id}`} type="video/mp4" />
+            <video playsInline controls width="100%" height="640">
+              <source src={api?.getVideoLink()} type="video/mp4" />
             </video>
           </Col>
+          )}
+
         </Row>
-      ) : (
-        <Row className="vertical-center text-center flex-column justify-content-center">
-          <h1>Sorki, ale nic tu nie ma 😕</h1>
-          <p className="text-muted">Jeśli jednak powinno coś tu być to napisz do Bartosza Gotowskiego na messengerze.</p>
-        </Row>
-      )}
+      ) : <Redirect to="/pin" />}
 
     </Container>
   );

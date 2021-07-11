@@ -3,6 +3,7 @@ export interface UserInterface {
   firstName: string,
   lastName: string,
   username: string,
+  role: string,
   avatar?: string,
-  greetingVideo?: string,
+  video?: string,
 }

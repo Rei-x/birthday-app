@@ -1,13 +1,10 @@
-import React, { useContext } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Redirect, useParams, Link } from 'react-router-dom';
 import { Button, Container } from 'react-bootstrap';
 import ky from 'ky';
-import {
-  BrowserView, mobileVendor, mobileModel, MobileView,
-} from 'react-device-detect';
-import { FaMobile } from 'react-icons/fa';
 import { BASE_URL } from '../config';
 import { UserContext } from '../contexts';
+import { useApi } from '../hooks';
 
 interface TokenViewInterface {
   tokenId: string
@@ -15,48 +12,53 @@ interface TokenViewInterface {
 
 const TokenView = () => {
   const { tokenId } = useParams<TokenViewInterface>();
-  const [, setContext] = useContext(UserContext);
-  const history = useHistory();
+  const [context] = useContext(UserContext);
+  const [isAuthed] = useApi(context);
+  const [pin, setPin] = useState<Number | undefined>();
 
-  const getJWTToken = async () => {
+  const generatePin = async () => {
     try {
-      const { token } = await ky.get(`${BASE_URL}/api/redeemToken/${tokenId}`).json();
-      localStorage.setItem('JWT', token);
+      const { pin: fetchedPin } = (await ky.get(`${BASE_URL}/api/redeemToken/${tokenId}`).json() as any);
 
-      if (!setContext) throw new Error('Context wasn\'t initialized');
-      setContext({ JWT: token });
-
-      history.push('/');
+      if (fetchedPin === undefined) throw new Error('Invalid redeem token');
+      setPin(fetchedPin);
     } catch (e) {
-      history.push('/');
+      if (context.addNotification) context.addNotification('Error', 'Tego przycisku można użyć tylko raz!');
     }
   };
 
-  return (
+  return isAuthed ? <Redirect to="/" /> : (
     <Container className="justify-content-center text-center vertical-center">
-      <BrowserView>
-        <h3>
-          Musisz wejść na tą stronę używając swojego telefonu,
-          później się dowiesz o co chodzi 😉
-        </h3>
-        <FaMobile size={100} className="mt-3" />
-      </BrowserView>
-      <MobileView>
-        <h3>
-          Uwaga, możesz użyć tego przycisku tylko
-          {' '}
-          <b>raz</b>
-          ,
-          przypisze on konto do urządzenia, na którym teraz jesteś, czyli:
-        </h3>
-        <h2 className="fw-bold">
-          {mobileVendor}
-          {' '}
-          {mobileModel}
-        </h2>
-        <Button onClick={getJWTToken}>Zaloguj się</Button>
-      </MobileView>
+      <div>
+        { pin ? (
+          <>
+            <h3>
+              Twój pin to
+              {' '}
+              <b>
+                {pin}
+              </b>
+            </h3>
+            <p className="text-muted">Zrób sobie screenshota najlepiej.</p>
 
+            <Link to="/pin">Przejdź do strony logowania </Link>
+          </>
+        ) : (
+          <>
+            <h3 className="d-block">
+              Ten przycisk wygeneruje dla Ciebie unikalny pin.
+              <br />
+              Lepiej go sobie zapisz.
+            </h3>
+            <Button onClick={generatePin} className="my-3">Wygeneruj pin</Button>
+            <p className="text-muted">
+              Uwaga, możesz użyć tego przycisku tylko
+              {' '}
+              <b>raz</b>
+            </p>
+          </>
+        )}
+      </div>
     </Container>
   );
 };

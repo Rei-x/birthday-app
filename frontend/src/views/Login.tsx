@@ -36,7 +36,7 @@ const LoginView = () => {
     try {
       const response = await ky.post('api/admin/login', { prefixUrl: BASE_URL, json: { username, password } }).json<ApiResponse>();
       const { JWT } = response;
-      setContext({ JWT });
+      setContext((oldContext) => ({ ...oldContext, JWT }));
     } catch (err) {
       setError(err.message);
     }

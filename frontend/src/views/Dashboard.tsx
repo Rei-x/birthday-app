@@ -1,19 +1,22 @@
 import React, {
   useCallback, useContext, useEffect, useState,
 } from 'react';
-import { Container, Row, Table } from 'react-bootstrap';
+import {
+  Container, Row,
+} from 'react-bootstrap';
 import { UserContext } from '../contexts';
 import { useApi } from '../hooks';
 import { UserInterface } from '../interfaces';
+import { CreateUserForm, UsersTable } from '../components';
 
 const Dashboard = () => {
   const [context] = useContext(UserContext);
   const [, api] = useApi(context);
-  const [state, setState] = useState<Array<UserInterface> | undefined>();
+  const [users, setUsers] = useState<Array<UserInterface> | undefined>();
 
   const getUserTable = useCallback(async () => {
-    const users = await api?.getUsers();
-    setState(users?.docs);
+    const fetchedUsers = await api?.getUsers();
+    setUsers(fetchedUsers?.docs);
   }, [api]);
 
   useEffect(() => {
@@ -21,36 +24,13 @@ const Dashboard = () => {
   }, [getUserTable]);
 
   return (
-    <Container>
+    <Container style={{ marginTop: '100px' }}>
       <Row className="vertical-center">
-        <Table>
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Username</th>
-              <th>First name</th>
-              <th>Last name</th>
-              <th>Avatar</th>
-              <th>Greeting video</th>
-            </tr>
-          </thead>
-          <tbody>
-            {state?.map((user: UserInterface) => (
-              <tr>
-                <td>{user._id}</td>
-                <td>{user.username}</td>
-                <td>{user.firstName}</td>
-                <td>{user.lastName}</td>
-                <td>{user.avatar}</td>
-                <td>{user.greetingVideo}</td>
-              </tr>
-            ))}
-          </tbody>
-
-        </Table>
+        <h1>Create user</h1>
+        <CreateUserForm update={getUserTable} />
+        { users ? <UsersTable users={users} update={getUserTable} /> : <h1>Loading...</h1>}
       </Row>
     </Container>
-
   );
 };
 

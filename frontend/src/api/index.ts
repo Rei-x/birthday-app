@@ -1,6 +1,9 @@
 import ky from 'ky';
 import jwt_decode from 'jwt-decode';
-import { JWTInterface, PaginatedUsers, UserInterface } from '../interfaces';
+import {
+  JWTInterface, PaginatedUsers, PinInterface, UserInterface,
+  RedeemTokenInterface,
+} from '../interfaces';
 import { BASE_URL } from '../config';
 
 class Api {
@@ -10,9 +13,13 @@ class Api {
 
   client: typeof ky;
 
+  role: string;
+
   constructor(JWT: string) {
+    const decodedJWT = jwt_decode<JWTInterface>(JWT);
     this.JWT = JWT;
-    this.userId = jwt_decode<JWTInterface>(JWT).id;
+    this.userId = decodedJWT.id;
+    this.role = decodedJWT.role;
     this.client = ky.extend({
       prefixUrl: BASE_URL,
       hooks: {
@@ -31,6 +38,49 @@ class Api {
 
   async getUsers(): Promise<PaginatedUsers> {
     return this.client.get('api/user').json<PaginatedUsers>();
+  }
+
+  async getInviteLink(userId: string): Promise<string> {
+    return (await this.client.post('api/redeemToken', { json: { userId } }).json<RedeemTokenInterface>()).token;
+  }
+
+  getVideoLink(userId?: string): string {
+    return `${BASE_URL}/api/video/${userId || this.userId}`;
+  }
+
+  async getJWT(pin: number): Promise<PinInterface> {
+    return (this.client.post('api/pin', { json: { pin } }).json<PinInterface>());
+  }
+
+  async checkForVideo(): Promise<boolean> {
+    try {
+      await this.client.head(`api/video/${this.userId}`);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  async postUser(formData: FormData): Promise<boolean> {
+    return this.client.post('api/user', { body: formData }).json();
+  }
+
+  async updateUser(formData: FormData, userId: string): Promise<boolean> {
+    try {
+      await this.client.patch(`api/user/${userId}`, { body: formData });
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  async deleteUser(userId: string): Promise<boolean> {
+    try {
+      await this.client.delete(`api/user/${userId}`);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }
 

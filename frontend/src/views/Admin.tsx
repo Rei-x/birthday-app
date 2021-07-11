@@ -6,8 +6,8 @@ import DashboardView from './Dashboard';
 
 const Admin = () => {
   const [context] = useContext(UserContext);
-  const [isAuthed] = useApi(context);
-  return isAuthed ? <DashboardView /> : <LoginView />;
+  const [, api] = useApi(context);
+  return api?.role === 'admin' ? <DashboardView /> : <LoginView />;
 };
 
 export default Admin;

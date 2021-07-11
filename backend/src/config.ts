@@ -11,7 +11,7 @@ class EnvError extends Error {
 interface EnvVariables {
   DB_URL: string
   SECRET: string
-  ORIGIN: string
+  ORIGIN: string | Array<string>
   PORT: string
 }
 
@@ -29,8 +29,10 @@ try {
   process.exit(1);
 }
 
+const originArray = ORIGIN?.split(/, |,/);
+
 const CheckedEnvVariables: EnvVariables = {
-  DB_URL, SECRET, ORIGIN: ORIGIN || `localhost:${PORT}`, PORT: PORT || '3000',
+  DB_URL, SECRET, ORIGIN: originArray || `localhost:${PORT}`, PORT: PORT || '3000',
 };
 
 export default CheckedEnvVariables;

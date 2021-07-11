@@ -99,6 +99,19 @@ describe('User', () => {
     expect(updatedUser!.lastName).toBe(user!.lastName);
   });
 
+  test('Deleting user', async () => {
+    const user = await UserModel.findOne();
+
+    expect(user).not.toBeNull();
+
+    const response = await request(app).delete(`/api/user/${user!._id}`).set('Authorization', adminJWTToken);
+
+    const emptyUser = await UserModel.findById(user!._id);
+
+    expect(emptyUser).toBeNull();
+    expect(response.status).toBe(200);
+  });
+
   test('Failing when trying to update other user without permission', async () => {
     const firstUser = await UserModel.findOne();
 

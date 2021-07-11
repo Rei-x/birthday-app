@@ -27,5 +27,6 @@ router.get('/user', isAuthed('admin'), userController.list);
 router.get('/user/:userId', isAuthed(), userController.one);
 router.post('/user', isAuthed('admin'), uploadSettings, userController.post);
 router.patch('/user/:userId', isAuthed(), uploadSettings, userController.patch);
+router.delete('/user/:userId', isAuthed('admin'), userController.remove);
 
 export default router;

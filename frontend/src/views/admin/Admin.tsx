@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { UserContext } from '../contexts';
-import { useApi } from '../hooks';
+import { UserContext } from '../../contexts';
+import { useApi } from '../../hooks';
 import LoginView from './Login';
 import DashboardView from './Dashboard';
 

@@ -1,9 +1,52 @@
-@import "~bootswatch/dist/zephyr/variables";
-@import "~bootstrap/scss/bootstrap";
-@import "~bootswatch/dist/zephyr/bootswatch";
+@import '~bootswatch/dist/zephyr/variables';
+@import '~bootstrap/scss/bootstrap';
+@import '~bootswatch/dist/zephyr/bootswatch';
 
-.vertical-center{
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
+:root {
+  --animate-duration: 0.8s;
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translate3d(-100%, 0, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeOutRight {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+.poll-question-enter {
+  animation-duration: var(--animate-duration);
+  animation-fill-mode: both;
+  animation-name: fadeInLeft;
+}
+
+.poll-question-exit {
+  animation-duration: var(--animate-duration);
+  animation-fill-mode: both;
+  animation-name: fadeOutRight;
+}
+
+.resultInfo {
+  text-align: center;
+}
+
+.vertical-center {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
 }

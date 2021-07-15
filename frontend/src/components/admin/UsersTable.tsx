@@ -6,11 +6,11 @@ import {
 } from 'react-bootstrap';
 import { FiSettings } from 'react-icons/fi';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-import Modal from './Modal';
-import { UserContext } from '../contexts';
-import { useApi } from '../hooks';
-import { UserInterface } from '../interfaces';
-import { getUrl } from '../utils';
+import Modal from '../Modal';
+import { UserContext } from '../../contexts';
+import { useApi } from '../../hooks';
+import { UserInterface } from '../../interfaces';
+import { getUrl } from '../../utils';
 
 interface TableProps {
   users: Array<UserInterface>

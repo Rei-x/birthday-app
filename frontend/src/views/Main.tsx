@@ -1,15 +1,14 @@
 import React, { useContext, useState, useEffect } from 'react';
-import {
-  Button, Col, Container, Row,
-} from 'react-bootstrap';
-import { Redirect } from 'react-router-dom';
+import { Button, Col, Container, Row } from 'react-bootstrap';
+import { Redirect, useHistory } from 'react-router-dom';
 import { UserContext } from '../contexts';
 import { useApi } from '../hooks';
 
 const MainView = () => {
   const [context] = useContext(UserContext);
-  const [,api] = useApi(context);
+  const [, api] = useApi(context);
   const [hasVideo, setHasVideo] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     const updateVideoStatus = async () => {
@@ -21,30 +20,30 @@ const MainView = () => {
 
   return (
     <Container>
-      { context.user ? (
+      {context.user ? (
         <Row className="justify-content-center">
-          <Col xs={12} sm={6} className="text-center vertical-center flex-column justify-content-center">
+          <Col
+            xs={12}
+            sm={6}
+            className="text-center vertical-center flex-column justify-content-center"
+          >
             <div>
-              <h1 className="fw-bolder">
-                Hejka
-                {' '}
-                {context.user.firstName}
-              </h1>
+              <h1 className="fw-bolder">Hejka {context.user.firstName}</h1>
               {hasVideo && <p>Obejrzyj film poniżej.</p>}
-              <Button>Hello</Button>
+              <Button onClick={() => history.push('/poll')}>Ankieta</Button>
             </div>
           </Col>
-          { hasVideo && (
-          <Col className="mt-3 mt-5-xs vertical-center flex-column justify-content-center">
-            <video playsInline controls width="100%" height="640">
-              <source src={api?.getVideoLink()} type="video/mp4" />
-            </video>
-          </Col>
+          {hasVideo && (
+            <Col className="mt-3 mt-5-xs vertical-center flex-column justify-content-center">
+              <video playsInline controls width="100%" height="640">
+                <source src={api?.getVideoLink()} type="video/mp4" />
+              </video>
+            </Col>
           )}
-
         </Row>
-      ) : <Redirect to="/pin" />}
-
+      ) : (
+        <Redirect to="/pin" />
+      )}
     </Container>
   );
 };

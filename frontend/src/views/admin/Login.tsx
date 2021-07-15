@@ -6,8 +6,8 @@ import React, {
 import { Container, Form, Button } from 'react-bootstrap';
 import { FaRegArrowAltCircleRight } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
-import { BASE_URL } from '../config';
-import { UserContext } from '../contexts';
+import { BASE_URL } from '../../config';
+import { UserContext } from '../../contexts';
 
 interface ApiResponse {
   JWT: string

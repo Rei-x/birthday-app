@@ -3,10 +3,10 @@ import ky from 'ky';
 import React, { useContext, useState } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import { Redirect, Link } from 'react-router-dom';
-import { BASE_URL } from '../config';
-import { UserContext } from '../contexts';
-import { useApi } from '../hooks';
-import { PinInterface } from '../interfaces';
+import { BASE_URL } from '../../config';
+import { UserContext } from '../../contexts';
+import { useApi } from '../../hooks';
+import { PinInterface } from '../../interfaces';
 
 const PinView = () => {
   const [pin, setPin] = useState<string>('');

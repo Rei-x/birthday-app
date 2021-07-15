@@ -1,7 +1,10 @@
 import ky from 'ky';
 import jwt_decode from 'jwt-decode';
 import {
-  JWTInterface, PaginatedUsers, PinInterface, UserInterface,
+  JWTInterface,
+  PaginatedUsers,
+  PinInterface,
+  UserInterface,
   RedeemTokenInterface,
 } from '../interfaces';
 import { BASE_URL } from '../config';
@@ -41,7 +44,11 @@ class Api {
   }
 
   async getInviteLink(userId: string): Promise<string> {
-    return (await this.client.post('api/redeemToken', { json: { userId } }).json<RedeemTokenInterface>()).token;
+    return (
+      await this.client
+        .post('api/redeemToken', { json: { userId } })
+        .json<RedeemTokenInterface>()
+    ).token;
   }
 
   getVideoLink(userId?: string): string {
@@ -49,7 +56,7 @@ class Api {
   }
 
   async getJWT(pin: number): Promise<PinInterface> {
-    return (this.client.post('api/pin', { json: { pin } }).json<PinInterface>());
+    return this.client.post('api/pin', { json: { pin } }).json<PinInterface>();
   }
 
   async checkForVideo(): Promise<boolean> {
@@ -77,6 +84,24 @@ class Api {
   async deleteUser(userId: string): Promise<boolean> {
     try {
       await this.client.delete(`api/user/${userId}`);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  async getPoll(): Promise<Record<any, any>> {
+    return this.client.get('api/poll').json<Record<any, any>>();
+  }
+
+  static async sendSurvey(PostId: string, survey: any) {
+    try {
+      await ky.post(`https://api.surveyjs.io/public/Survey/post`, {
+        json: {
+          PostId,
+          SurveyResult: JSON.stringify(survey),
+        },
+      });
       return true;
     } catch (e) {
       return false;

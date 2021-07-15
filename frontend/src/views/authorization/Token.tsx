@@ -2,12 +2,12 @@ import React, { useContext, useState } from 'react';
 import { Redirect, useParams, Link } from 'react-router-dom';
 import { Button, Container } from 'react-bootstrap';
 import ky from 'ky';
-import { BASE_URL } from '../config';
-import { UserContext } from '../contexts';
-import { useApi } from '../hooks';
+import { BASE_URL } from '../../config';
+import { UserContext } from '../../contexts';
+import { useApi } from '../../hooks';
 
 interface TokenViewInterface {
-  tokenId: string
+  tokenId: string;
 }
 
 const TokenView = () => {
@@ -18,26 +18,30 @@ const TokenView = () => {
 
   const generatePin = async () => {
     try {
-      const { pin: fetchedPin } = (await ky.get(`${BASE_URL}/api/redeemToken/${tokenId}`).json() as any);
+      const { pin: fetchedPin } = (await ky
+        .get(`${BASE_URL}/api/redeemToken/${tokenId}`)
+        .json()) as any;
 
       if (fetchedPin === undefined) throw new Error('Invalid redeem token');
       setPin(fetchedPin);
     } catch (e) {
-      if (context.addNotification) context.addNotification('Error', 'Tego przycisku można użyć tylko raz!');
+      if (context.addNotification)
+        context.addNotification(
+          'Error',
+          'Tego przycisku można użyć tylko raz!'
+        );
     }
   };
 
-  return isAuthed ? <Redirect to="/" /> : (
+  return isAuthed ? (
+    <Redirect to="/" />
+  ) : (
     <Container className="justify-content-center text-center vertical-center">
       <div>
-        { pin ? (
+        {pin ? (
           <>
             <h3>
-              Twój pin to
-              {' '}
-              <b>
-                {pin}
-              </b>
+              Twój pin to <b>{pin}</b>
             </h3>
             <p className="text-muted">Zrób sobie screenshota najlepiej.</p>
 
@@ -50,11 +54,11 @@ const TokenView = () => {
               <br />
               Lepiej go sobie zapisz.
             </h3>
-            <Button onClick={generatePin} className="my-3">Wygeneruj pin</Button>
+            <Button onClick={generatePin} className="my-3">
+              Wygeneruj pin
+            </Button>
             <p className="text-muted">
-              Uwaga, możesz użyć tego przycisku tylko
-              {' '}
-              <b>raz</b>
+              Uwaga, możesz użyć tego przycisku tylko <b>raz</b>
             </p>
           </>
         )}

@@ -1,13 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Route, BrowserRouter as Router, Switch, Redirect,
+  Route,
+  BrowserRouter as Router,
+  Switch,
+  Redirect,
 } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
 import { Container, Spinner, ToastContainer } from 'react-bootstrap';
 import Navbar from './components/Navbar';
 import './app.scss';
 import {
-  AdminView, MainView, NotFoundView, PinView, TokenView,
+  AdminView,
+  MainView,
+  NotFoundView,
+  PinView,
+  TokenView,
+  PollView,
 } from './views';
 import { UserContext } from './contexts';
 import { GlobalContext, NotificationInterface } from './interfaces';
@@ -16,10 +24,15 @@ import { Toast } from './components';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
-  const [notifications, setNotifications] = useState<Array<NotificationInterface>>([]);
+  const [notifications, setNotifications] = useState<
+    Array<NotificationInterface>
+  >([]);
   const [context, setContext] = useState<GlobalContext>({
     addNotification: (title: string, children: React.ReactNode) => {
-      setNotifications((oldNotifications) => [...oldNotifications, { title, children }]);
+      setNotifications((oldNotifications) => [
+        ...oldNotifications,
+        { title, children },
+      ]);
     },
   });
   const [isAuthed, api] = useApi(context);
@@ -59,7 +72,10 @@ const App = () => {
           const user = await api!.getProfile();
           setContext((oldContext) => ({ ...oldContext, user }));
         } catch (e) {
-          context.addNotification('Błąd', <p>Coś poszło nie tak, spróbuj jeszcze raz się zalogować.</p>);
+          context.addNotification(
+            'Błąd',
+            <p>Coś poszło nie tak, spróbuj jeszcze raz się zalogować.</p>
+          );
           localStorage.removeItem('JWT');
         }
         setLoading(false);
@@ -68,7 +84,7 @@ const App = () => {
     getAndSetUserContext();
   }, [context?.JWT, isAuthed, api]);
 
-  return (loading ? (
+  return loading ? (
     <Container className="vertical-center">
       <Spinner animation="border" role="status" className="mx-auto">
         <span className="visually-hidden">Loading...</span>
@@ -88,21 +104,35 @@ const App = () => {
           <Route path="/admin/">
             <AdminView />
           </Route>
-          <Route path="/" exact>
-            {isAuthed ? <MainView /> : <Redirect to="/pin" />}
-          </Route>
+          {isAuthed ? (
+            <>
+              <Route path="/" exact>
+                <MainView />
+              </Route>
+              <Route path="/poll">
+                <PollView />
+              </Route>
+            </>
+          ) : (
+            <Redirect to="/pin" />
+          )}
           <Route path="/404">
             <NotFoundView />
           </Route>
           <Redirect from="*" to="/404" />
         </Switch>
       </Router>
-      <ToastContainer position="bottom-end" className="m-3" style={{ zIndex: 1031 }}>
-        { notifications.map(({ title, children }) => <Toast title={title}>{children}</Toast>) }
+      <ToastContainer
+        position="bottom-end"
+        className="m-3"
+        style={{ zIndex: 1031 }}
+      >
+        {notifications.map(({ title, children }) => (
+          <Toast title={title}>{children}</Toast>
+        ))}
       </ToastContainer>
-
     </UserContext.Provider>
-  ));
+  );
 };
 
 export default App;

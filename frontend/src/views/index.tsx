@@ -1,9 +1,10 @@
 import MainView from './Main';
-import TokenView from './Token';
-import AdminView from './Admin';
+import TokenView from './authorization/Token';
+import AdminView from './admin/Admin';
 import NotFoundView from './404';
-import PinView from './Pin';
+import PinView from './authorization/Pin';
+import PollView from './Poll';
 
 export {
-  MainView, TokenView, AdminView, NotFoundView, PinView,
+  MainView, TokenView, AdminView, NotFoundView, PinView, PollView,
 };

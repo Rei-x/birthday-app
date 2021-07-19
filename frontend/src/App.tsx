@@ -104,6 +104,9 @@ const App = () => {
           <Route path="/admin/">
             <AdminView />
           </Route>
+          <Route path="/404">
+            <NotFoundView />
+          </Route>
           {isAuthed ? (
             <>
               <Route path="/" exact>
@@ -116,9 +119,6 @@ const App = () => {
           ) : (
             <Redirect to="/pin" />
           )}
-          <Route path="/404">
-            <NotFoundView />
-          </Route>
           <Redirect from="*" to="/404" />
         </Switch>
       </Router>

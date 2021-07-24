@@ -2,6 +2,11 @@
 @import '~bootstrap/scss/bootstrap';
 @import '~bootswatch/dist/zephyr/bootswatch';
 
+$light-bg: #f7f7f7;
+$pink: #dc307c;
+$blue: #33b7e2;
+$violet: #6a70eb;
+
 :root {
   --animate-duration: 0.8s;
 }
@@ -49,4 +54,114 @@
   min-height: 100vh;
   display: flex;
   align-items: center;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+  background-size: cover;
+  background-position: 50%;
+  background-repeat: no-repeat;
+}
+
+.widget {
+  $margin: 20px;
+  background-color: $light-bg;
+  border-radius: 25px;
+  box-sizing: border-box;
+  max-width: 500px;
+  margin: $margin;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  h5 {
+    font-weight: 600;
+    margin: 0;
+    font-size: 1.1rem;
+  }
+  p {
+    margin-bottom: 0;
+  }
+}
+
+.weather {
+  padding-bottom: 15px;
+  &__temperature {
+    margin: 0;
+    margin-top: 10px;
+  }
+}
+
+.time-remaining {
+  $padding-my: 27px;
+  padding-top: $padding-my;
+  padding-bottom: $padding-my;
+}
+
+.vodka {
+  &__wrapper {
+    width: 100%;
+  }
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+  &__grid {
+    margin-top: 15px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  &__submit {
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: 0;
+  }
+}
+
+.accompaniment {
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  &__button {
+    margin-top: 10px;
+    width: 15rem;
+  }
+}
+
+.shortcuts {
+  &__list {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+  &__item {
+    font-family: inherit;
+    font-weight: 500;
+    color: white;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 4px;
+    text-align: center;
+    vertical-align: middle;
+    width: 30%;
+    height: 70px;
+    line-height: 50px;
+    border: none;
+    font-size: 16px;
+    &--faq {
+      background-color: $blue;
+    }
+    &--video {
+      background-color: $violet;
+      line-height: 1.5rem;
+    }
+    &--guests {
+      background-color: $pink;
+      line-height: 1.5rem;
+    }
+  }
 }

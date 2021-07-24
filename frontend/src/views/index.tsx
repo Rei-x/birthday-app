@@ -4,7 +4,14 @@ import AdminView from './admin/Admin';
 import NotFoundView from './404';
 import PinView from './authorization/Pin';
 import PollView from './Poll';
+import UserDashboardView from './UserDashboard';
 
 export {
-  MainView, TokenView, AdminView, NotFoundView, PinView, PollView,
+  MainView,
+  TokenView,
+  AdminView,
+  NotFoundView,
+  PinView,
+  PollView,
+  UserDashboardView,
 };

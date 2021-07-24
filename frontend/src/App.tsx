@@ -11,7 +11,7 @@ import Navbar from './components/Navbar';
 import './app.scss';
 import {
   AdminView,
-  MainView,
+  UserDashboardView,
   NotFoundView,
   PinView,
   TokenView,
@@ -110,7 +110,7 @@ const App = () => {
           {isAuthed ? (
             <>
               <Route path="/" exact>
-                <MainView />
+                <UserDashboardView />
               </Route>
               <Route path="/poll">
                 <PollView />

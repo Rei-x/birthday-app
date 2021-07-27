@@ -12,6 +12,7 @@ import TimeRemaining from './userDashboard/TimeRemaining';
 import VodkaPoll from './userDashboard/VodkaPoll';
 import Accompaniment from './userDashboard/Accompaniment';
 import Shortcuts from './userDashboard/Shortcuts';
+import Footer from './Footer';
 
 export {
   Navbar,
@@ -28,4 +29,5 @@ export {
   VodkaPoll,
   Accompaniment,
   Shortcuts,
+  Footer,
 };

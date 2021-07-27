@@ -13,7 +13,7 @@ import * as views from './views';
 import { UserContext } from './contexts';
 import { NotificationInterface } from './interfaces';
 import { useApi } from './hooks';
-import { Toast } from './components';
+import { Toast, Footer } from './components';
 import { GlobalContextInterface } from './api';
 
 const App = () => {
@@ -119,6 +119,7 @@ const App = () => {
           )}
           <Redirect from="*" to="/404" />
         </Switch>
+        <Footer />
       </Router>
       <ToastContainer
         position="bottom-end"

@@ -31,7 +31,6 @@ const UserDashboard = () => {
       <VodkaPoll />
       <Accompaniment />
       <Shortcuts />
-      <p className="text-center text-dark mt-5">Made with ❤ by Barek</p>
     </Container>
   );
 };

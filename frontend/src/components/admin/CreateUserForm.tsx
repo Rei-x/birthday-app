@@ -1,8 +1,7 @@
-import React, { useContext, useState } from "react";
-import { Button, Form } from "react-bootstrap";
-import Modal from "../Modal";
-import { UserContext } from "../../contexts";
-import { useApi } from "../../hooks";
+import React, { useState } from 'react';
+import { Button, Form } from 'react-bootstrap';
+import Modal from '../Modal';
+import { useApi } from '../../hooks';
 
 interface InputProps {
   name: string;
@@ -36,8 +35,7 @@ interface FormProps {
 }
 
 const CreateUserForm = ({ update }: FormProps) => {
-  const [context] = useContext(UserContext);
-  const [, api] = useApi(context);
+  const api = useApi();
   const [showModal, setShowModal] = useState(false);
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {

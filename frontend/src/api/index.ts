@@ -9,6 +9,13 @@ import {
 } from '../interfaces';
 import { BASE_URL } from '../config';
 
+export interface GlobalContextInterface {
+  JWT?: string;
+  user?: UserInterface;
+  addNotification: (title: string, children: React.ReactNode) => void;
+  apiClient?: Api;
+}
+
 class Api {
   JWT: string;
 

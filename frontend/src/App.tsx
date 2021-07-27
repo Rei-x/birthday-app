@@ -18,28 +18,29 @@ import {
   PollView,
 } from './views';
 import { UserContext } from './contexts';
-import { GlobalContext, NotificationInterface } from './interfaces';
+import { NotificationInterface } from './interfaces';
 import { useApi } from './hooks';
 import { Toast } from './components';
+import { GlobalContextInterface } from './api';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
   const [notifications, setNotifications] = useState<
     Array<NotificationInterface>
   >([]);
-  const [context, setContext] = useState<GlobalContext>({
+  const [context, setContext] = useState<GlobalContextInterface>({
     addNotification: (title: string, children: React.ReactNode) => {
       setNotifications((oldNotifications) => [
         ...oldNotifications,
         { title, children },
       ]);
     },
+    apiClient: undefined,
   });
-  const [isAuthed, api] = useApi(context);
+  const api = useApi(context, setContext);
 
   useEffect(() => {
     const JWT = localStorage.getItem('JWT');
-
     try {
       if (JWT) jwtDecode(JWT);
     } catch (e) {
@@ -67,7 +68,7 @@ const App = () => {
 
   useEffect(() => {
     const getAndSetUserContext = async () => {
-      if (isAuthed && api && context?.JWT) {
+      if (api) {
         try {
           const user = await api!.getProfile();
           setContext((oldContext) => ({ ...oldContext, user }));
@@ -82,7 +83,8 @@ const App = () => {
       }
     };
     getAndSetUserContext();
-  }, [context?.JWT, isAuthed, api]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [context.addNotification, api]);
 
   return loading ? (
     <Container className="vertical-center">
@@ -107,7 +109,7 @@ const App = () => {
           <Route path="/404">
             <NotFoundView />
           </Route>
-          {isAuthed ? (
+          {context.user ? (
             <>
               <Route path="/" exact>
                 <UserDashboardView />

@@ -1,8 +1,13 @@
-import React, {
-  useContext, useEffect, useRef, useState,
-} from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import {
-  Dropdown, Table, InputGroup, FormControl, Button, Overlay, Tooltip, Form,
+  Dropdown,
+  Table,
+  InputGroup,
+  FormControl,
+  Button,
+  Overlay,
+  Tooltip,
+  Form,
 } from 'react-bootstrap';
 import { FiSettings } from 'react-icons/fi';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -13,8 +18,8 @@ import { UserInterface } from '../../interfaces';
 import { getUrl } from '../../utils';
 
 interface TableProps {
-  users: Array<UserInterface>
-  update: CallableFunction
+  users: Array<UserInterface>;
+  update: CallableFunction;
 }
 
 const UsersTable = ({ users, update }: TableProps) => {
@@ -22,7 +27,7 @@ const UsersTable = ({ users, update }: TableProps) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [inviteLink, setInviteLink] = useState('');
   const [context] = useContext(UserContext);
-  const [, api] = useApi(context);
+  const api = useApi();
   const copyButton = useRef(null);
 
   const generateInviteLink = async (userId: string) => {
@@ -34,13 +39,15 @@ const UsersTable = ({ users, update }: TableProps) => {
   };
 
   const deleteUser = async (userId: string) => {
-    if (context.addNotification) context.addNotification('Success', <p>User has been deleted</p>);
+    if (context.addNotification)
+      context.addNotification('Success', <p>User has been deleted</p>);
     await api?.deleteUser(userId);
     update();
   };
 
   const handleFileChange = async (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, userId: string,
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    userId: string
   ) => {
     const fileInput = event.target;
     const { files } = fileInput as any;
@@ -51,7 +58,9 @@ const UsersTable = ({ users, update }: TableProps) => {
     const result = await api?.updateUser(formData, userId);
     if (context.addNotification) {
       const title = result ? 'Success' : 'Error';
-      const message = result ? 'User has been updated' : 'Something went wrong during updating';
+      const message = result
+        ? 'User has been updated'
+        : 'Something went wrong during updating';
       context.addNotification(title, message);
     }
     update();
@@ -107,7 +116,9 @@ const UsersTable = ({ users, update }: TableProps) => {
                     <FiSettings size={20} />
                   </Dropdown.Toggle>
                   <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-1">Edit information</Dropdown.Item>
+                    <Dropdown.Item href="#/action-1">
+                      Edit information
+                    </Dropdown.Item>
                     <Dropdown.Item onClick={() => generateInviteLink(user._id)}>
                       Generate invite link
                     </Dropdown.Item>
@@ -131,12 +142,19 @@ const UsersTable = ({ users, update }: TableProps) => {
             value={inviteLink}
             disabled
           />
-          <CopyToClipboard text={inviteLink} onCopy={() => setShowTooltip(true)}>
+          <CopyToClipboard
+            text={inviteLink}
+            onCopy={() => setShowTooltip(true)}
+          >
             <Button ref={copyButton} variant="outline-primary" id="copyButton">
               Copy
             </Button>
           </CopyToClipboard>
-          <Overlay target={copyButton.current} show={showTooltip} placement="right">
+          <Overlay
+            target={copyButton.current}
+            show={showTooltip}
+            placement="right"
+          >
             {({ ref, style }) => (
               <Tooltip id="button-tooltip" ref={ref} style={style}>
                 Coppied
@@ -144,7 +162,6 @@ const UsersTable = ({ users, update }: TableProps) => {
             )}
           </Overlay>
         </InputGroup>
-
       </Modal>
     </>
   );

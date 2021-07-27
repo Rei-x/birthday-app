@@ -13,7 +13,7 @@ interface TokenViewInterface {
 const TokenView = () => {
   const { tokenId } = useParams<TokenViewInterface>();
   const [context] = useContext(UserContext);
-  const [isAuthed] = useApi(context);
+  const api = useApi();
   const [pin, setPin] = useState<Number | undefined>();
 
   const generatePin = async () => {
@@ -25,15 +25,11 @@ const TokenView = () => {
       if (fetchedPin === undefined) throw new Error('Invalid redeem token');
       setPin(fetchedPin);
     } catch (e) {
-      if (context.addNotification)
-        context.addNotification(
-          'Error',
-          'Tego przycisku można użyć tylko raz!'
-        );
+      context.addNotification('Error', 'Tego przycisku można użyć tylko raz!');
     }
   };
 
-  return isAuthed ? (
+  return api ? (
     <Redirect to="/" />
   ) : (
     <Container className="justify-content-center text-center vertical-center">

@@ -6,7 +6,7 @@ import { useApi } from '../hooks';
 
 const MainView = () => {
   const [context] = useContext(UserContext);
-  const [, api] = useApi(context);
+  const api = useApi();
   const [hasVideo, setHasVideo] = useState(false);
   const history = useHistory();
 

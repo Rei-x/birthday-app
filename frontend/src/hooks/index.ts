@@ -1,19 +1,49 @@
-import { useEffect, useState } from 'react';
-import Api from '../api';
+import { useCallback, useContext, useEffect, useState } from 'react';
+import { UserContext } from '../contexts';
+import Api, { GlobalContextInterface } from '../api';
 
-type UseApiType = [boolean, undefined | Api];
+const useApi = (
+  context?: { JWT?: string; apiClient?: Api },
+  setContext?: React.Dispatch<React.SetStateAction<GlobalContextInterface>>
+) => {
+  const [defaultContext, setDefaultContext] = useContext(UserContext);
+  const [apiClient, setApiClient] = useState<Api | undefined>(undefined);
+  const contextUnified = context || defaultContext;
+  const setContextUnified = setContext || setDefaultContext;
 
-const useApi = (context?: { JWT?: string }) => {
-  const [state, setState] = useState<UseApiType>([false, undefined]);
+  const setStateAndContext = useCallback(
+    (api: Api) => {
+      setApiClient(api);
+      if (setContextUnified)
+        setContextUnified((oldContext) => ({
+          ...oldContext,
+          apiClient: api,
+        }));
+    },
+    [setApiClient, setContextUnified]
+  );
+
   useEffect(() => {
-    if (context?.JWT) {
-      const api = new Api(context.JWT);
-      setState([true, api]);
-    } else {
-      setState([false, undefined]);
+    if (
+      contextUnified.JWT &&
+      setContextUnified &&
+      contextUnified.apiClient === undefined
+    ) {
+      const api = new Api(contextUnified.JWT);
+      setStateAndContext(api);
     }
-  }, [context?.JWT]);
-  return state;
+  }, [
+    contextUnified.JWT,
+    contextUnified.apiClient,
+    setContextUnified,
+    setStateAndContext,
+  ]);
+
+  useEffect(() => {
+    setApiClient(contextUnified.apiClient);
+  }, [contextUnified.apiClient]);
+
+  return apiClient;
 };
 
 // eslint-disable-next-line import/prefer-default-export

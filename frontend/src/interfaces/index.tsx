@@ -1,4 +1,3 @@
-export * from './GlobalContext';
 export * from './JWT';
 export * from './PaginatedUsers';
 export * from './UserInterface';

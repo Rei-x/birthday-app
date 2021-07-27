@@ -6,7 +6,12 @@ import Toast from './Toast';
 import NotFoundMessage from './NotFound';
 import PollQuestion from './PollQuestion';
 import Avatar from './Avatar';
-import Widget from './Widget';
+import Widget from './userDashboard/Widget';
+import Weather from './userDashboard/Weather';
+import TimeRemaining from './userDashboard/TimeRemaining';
+import VodkaPoll from './userDashboard/VodkaPoll';
+import Accompaniment from './userDashboard/Accompaniment';
+import Shortcuts from './userDashboard/Shortcuts';
 
 export {
   Navbar,
@@ -18,4 +23,9 @@ export {
   PollQuestion,
   Avatar,
   Widget,
+  Weather,
+  TimeRemaining,
+  VodkaPoll,
+  Accompaniment,
+  Shortcuts,
 };

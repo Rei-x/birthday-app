@@ -5,6 +5,7 @@ import NotFoundView from './404';
 import PinView from './authorization/Pin';
 import PollView from './Poll';
 import UserDashboardView from './UserDashboard';
+import FaqView from './Faq';
 
 export {
   MainView,
@@ -14,4 +15,5 @@ export {
   PinView,
   PollView,
   UserDashboardView,
+  FaqView,
 };

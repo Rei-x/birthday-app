@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
-import {
-  Nav, Navbar, Container,
-} from 'react-bootstrap';
+import { Nav, Navbar, Container } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import { Link } from 'react-router-dom';
 import logo from '../assets/18Barka.png';
 import { UserContext } from '../contexts';
@@ -11,13 +10,23 @@ const Navigation = () => {
 
   const logout = () => {
     if (setContext) {
-      setContext((oldContext) => ({ ...oldContext, JWT: undefined, user: undefined }));
+      setContext((oldContext) => ({
+        ...oldContext,
+        JWT: undefined,
+        user: undefined,
+      }));
     }
     localStorage.removeItem('JWT');
   };
 
   return (
-    <Navbar variant="dark" bg="dark" expand="lg" className="fixed-top">
+    <Navbar
+      collapseOnSelect
+      variant="dark"
+      bg="dark"
+      expand="lg"
+      className="fixed-top"
+    >
       <Container>
         <Navbar.Brand as={Link} to="/">
           <img src={logo} alt="logo" width="150" />
@@ -25,14 +34,27 @@ const Navigation = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            { context?.user?.role === 'admin' && <Nav.Link as={Link} to="/admin">Admin</Nav.Link> }
+            {context?.user?.role === 'admin' && (
+              <LinkContainer to="/admin">
+                <Nav.Link>Admin</Nav.Link>
+              </LinkContainer>
+            )}
+            {context?.user && (
+              <>
+                <LinkContainer to="/" exact>
+                  <Nav.Link>Główny panel</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to="/faq">
+                  <Nav.Link>FAQ</Nav.Link>
+                </LinkContainer>
+              </>
+            )}
           </Nav>
-          { context?.user && (
-          <Nav>
-            <Nav.Link onClick={logout}>Logout</Nav.Link>
-          </Nav>
+          {context?.user && (
+            <Nav>
+              <Nav.Link onClick={logout}>Logout</Nav.Link>
+            </Nav>
           )}
-
         </Navbar.Collapse>
       </Container>
     </Navbar>

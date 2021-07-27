@@ -19,7 +19,7 @@ const UserDashboard = () => {
     'https://robohash.org/60d26ee9c88916cd6a86c27ca987ce53?set=set4&bgset=bg2&size=400x400';
 
   return (
-    <Container style={{ marginTop: '100px' }}>
+    <Container className="navbar-margin">
       <div className="d-flex ms-3 mb-5">
         <Avatar url={avatarUrl} />
         <h2 className="ms-3" style={{ marginTop: '10px' }}>
@@ -31,6 +31,7 @@ const UserDashboard = () => {
       <VodkaPoll />
       <Accompaniment />
       <Shortcuts />
+      <p className="text-center text-dark mt-5">Made with ❤ by Barek</p>
     </Container>
   );
 };

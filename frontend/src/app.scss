@@ -11,6 +11,10 @@ $violet: #6a70eb;
   --animate-duration: 0.8s;
 }
 
+.navbar-margin {
+  margin-top: 6rem;
+}
+
 @keyframes fadeInLeft {
   from {
     opacity: 0;

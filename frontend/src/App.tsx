@@ -9,14 +9,7 @@ import jwtDecode from 'jwt-decode';
 import { Container, Spinner, ToastContainer } from 'react-bootstrap';
 import Navbar from './components/Navbar';
 import './app.scss';
-import {
-  AdminView,
-  UserDashboardView,
-  NotFoundView,
-  PinView,
-  TokenView,
-  PollView,
-} from './views';
+import * as views from './views';
 import { UserContext } from './contexts';
 import { NotificationInterface } from './interfaces';
 import { useApi } from './hooks';
@@ -98,24 +91,27 @@ const App = () => {
         <Navbar />
         <Switch>
           <Route path="/invite/:tokenId">
-            <TokenView />
+            <views.TokenView />
           </Route>
           <Route path="/pin">
-            <PinView />
+            <views.PinView />
           </Route>
           <Route path="/admin/">
-            <AdminView />
+            <views.AdminView />
           </Route>
           <Route path="/404">
-            <NotFoundView />
+            <views.NotFoundView />
           </Route>
           {context.user ? (
             <>
               <Route path="/" exact>
-                <UserDashboardView />
+                <views.UserDashboardView />
               </Route>
               <Route path="/poll">
-                <PollView />
+                <views.PollView />
+              </Route>
+              <Route path="/faq">
+                <views.FaqView />
               </Route>
             </>
           ) : (

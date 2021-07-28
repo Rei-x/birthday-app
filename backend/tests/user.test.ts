@@ -1,18 +1,27 @@
 import request from 'supertest';
 import rimraf from 'rimraf';
 import app from '../src/app';
-import { UserModel } from '../src/models';
+import { UserInterface, UserModel } from '../src/models';
 import 'jest-extended';
 import { connectToMemoryDatabase, createTestUser, getUserJWT } from './utils';
 import { closeConnectionToDatabase } from '../src/db';
 
 describe('User', () => {
   let adminJWTToken: string;
+  let userJWTToken: string;
+  let normalUser: UserInterface;
 
   beforeAll(async () => {
     await connectToMemoryDatabase();
-    const adminUser = await createTestUser({ username: 'adminUser', role: 'admin' });
+    const adminUser = await createTestUser({
+      username: 'adminUser',
+      role: 'admin',
+    });
     adminJWTToken = await getUserJWT(adminUser);
+    normalUser = await createTestUser({
+      username: 'normalUser',
+    });
+    userJWTToken = await getUserJWT(normalUser);
   });
 
   jest.setTimeout(10000);
@@ -46,7 +55,9 @@ describe('User', () => {
 
     expect(user).not.toBeUndefined();
 
-    const response = await request(app).get(`/api/user/${user!.id}`).set('Authorization', adminJWTToken);
+    const response = await request(app)
+      .get(`/api/user/${user!.id}`)
+      .set('Authorization', adminJWTToken);
     expect(response.status).toBe(200);
     expect(response.body).toContainEntries([
       ['username', user!.username],
@@ -56,8 +67,10 @@ describe('User', () => {
     ]);
   });
 
-  test('Listing users', async () => {
-    const response = await request(app).get('/api/user').set('Authorization', adminJWTToken);
+  test('Listing users with adminJWT', async () => {
+    const response = await request(app)
+      .get('/api/user')
+      .set('Authorization', adminJWTToken);
     expect(response.status).toBe(200);
     expect(response.body).toContainAllKeys([
       'docs',
@@ -70,18 +83,21 @@ describe('User', () => {
       'hasPrevPage',
       'hasNextPage',
       'prevPage',
-      'nextPage']);
+      'nextPage',
+    ]);
+  });
+
+  test('Listing users with userJWT should include only first name and last name', async () => {
+    const response = await request(app)
+      .get('/api/user')
+      .set('Authorization', userJWTToken);
+    expect(response.status).toBe(200);
+    expect(response.body.docs[0]).toContainAllKeys(['firstName', 'lastName']);
   });
 
   test('Updating user', async () => {
-    const user = await UserModel.findOne({});
-
-    expect(user).not.toBeNull();
-
-    const userJWTToken = await getUserJWT(user!);
-
     const response = await request(app)
-      .patch(`/api/user/${user!.id}`)
+      .patch(`/api/user/${normalUser!.id}`)
       .attach('avatar', 'tests/static/test.jpg')
       .attach('video', 'tests/static/test.mp4')
       .set('Authorization', userJWTToken);
@@ -89,24 +105,22 @@ describe('User', () => {
     expect(response.status).toBe(200);
     expect(response.body).toStrictEqual({});
 
-    const updatedUser = await UserModel.findById(user!.id);
+    const updatedUser = await UserModel.findById(normalUser!.id);
 
     expect(updatedUser).not.toBeNull();
-    expect(updatedUser!.avatar).not.toBe(user!.avatar);
-    expect(updatedUser!.video).not.toBe(user!.video);
-    expect(updatedUser!.username).toBe(user!.username);
-    expect(updatedUser!.firstName).toBe(user!.firstName);
-    expect(updatedUser!.lastName).toBe(user!.lastName);
+    expect(updatedUser!.avatar).not.toBe(normalUser!.avatar);
+    expect(updatedUser!.video).not.toBe(normalUser!.video);
+    expect(updatedUser!.username).toBe(normalUser!.username);
+    expect(updatedUser!.firstName).toBe(normalUser!.firstName);
+    expect(updatedUser!.lastName).toBe(normalUser!.lastName);
   });
 
   test('Deleting user', async () => {
-    const user = await UserModel.findOne();
+    const response = await request(app)
+      .delete(`/api/user/${normalUser._id}`)
+      .set('Authorization', adminJWTToken);
 
-    expect(user).not.toBeNull();
-
-    const response = await request(app).delete(`/api/user/${user!._id}`).set('Authorization', adminJWTToken);
-
-    const emptyUser = await UserModel.findById(user!._id);
+    const emptyUser = await UserModel.findById(normalUser._id);
 
     expect(emptyUser).toBeNull();
     expect(response.status).toBe(200);

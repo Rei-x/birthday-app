@@ -17,13 +17,21 @@ const storage = multer.diskStorage({
     cb(null, uploadPath);
   },
   filename: (_req, file, cb) => {
-    cb(null, `${randomstring.generate()}.${Date.now()}${path.extname(file.originalname)}`);
+    cb(
+      null,
+      `${randomstring.generate()}.${Date.now()}${path.extname(
+        file.originalname
+      )}`
+    );
   },
 });
 
-const uploadSettings = multer({ storage }).fields([{ name: 'avatar', maxCount: 1 }, { name: 'video', maxCount: 1 }]);
+const uploadSettings = multer({ storage }).fields([
+  { name: 'avatar', maxCount: 1 },
+  { name: 'video', maxCount: 1 },
+]);
 
-router.get('/user', isAuthed('admin'), userController.list);
+router.get('/user', isAuthed(), userController.list);
 router.get('/user/:userId', isAuthed(), userController.one);
 router.post('/user', isAuthed('admin'), uploadSettings, userController.post);
 router.patch('/user/:userId', isAuthed(), uploadSettings, userController.patch);

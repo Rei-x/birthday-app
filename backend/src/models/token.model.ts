@@ -1,11 +1,11 @@
 import { Schema, model, Document } from 'mongoose';
 import { UserInterface } from './user.model';
 
-interface TokenInterface extends Document{
-  token: string
-  user: UserInterface
-  isActive: boolean
-  validUntil?: Date
+interface TokenInterface extends Document {
+  token: string;
+  user: UserInterface;
+  isActive: boolean;
+  validUntil?: Date;
 }
 
 const schema = new Schema<TokenInterface>({

@@ -2,13 +2,16 @@ import { param } from 'express-validator';
 import { UserModel } from '../../models';
 import createRequestHandler from '../createRequestHandler';
 
-const remove = createRequestHandler(async (req, res) => {
-  const { userId } = req.params;
+const remove = createRequestHandler(
+  async (req, res) => {
+    const { userId } = req.params;
 
-  const result = await UserModel.findByIdAndDelete(userId);
+    const result = await UserModel.findByIdAndDelete(userId);
 
-  if (!result) res.status(400).json({ error: 'Nothing was deleted' });
-  else res.sendStatus(200);
-}, { validators: param('userId').isString().exists() });
+    if (!result) res.status(400).json({ error: 'Nothing was deleted' });
+    else res.sendStatus(200);
+  },
+  { validators: param('userId').isString().exists() }
+);
 
 export default remove;

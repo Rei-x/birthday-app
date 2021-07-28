@@ -5,5 +5,9 @@ import adminController from './admin.controller';
 import pinController from './pin.controller';
 
 export {
-  userController, tokenController, videoController, adminController, pinController,
+  userController,
+  tokenController,
+  videoController,
+  adminController,
+  pinController,
 };

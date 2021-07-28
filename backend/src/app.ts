@@ -4,7 +4,12 @@ import cors from 'cors';
 import { connectToDatabase } from './db';
 import config from './config';
 import {
-  tokenRoute, docsRoute, userRoute, videoRoute, adminRoute, pinRoute,
+  tokenRoute,
+  docsRoute,
+  userRoute,
+  videoRoute,
+  adminRoute,
+  pinRoute,
 } from './routes';
 
 if (process.env.NODE_ENV !== 'test') {
@@ -16,9 +21,11 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(morgan('dev'));
-app.use(cors({
-  origin: config.ORIGIN,
-}));
+app.use(
+  cors({
+    origin: config.ORIGIN,
+  })
+);
 
 app.use('/api', [tokenRoute, userRoute, videoRoute, adminRoute, pinRoute]);
 

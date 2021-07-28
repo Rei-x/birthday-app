@@ -1,11 +1,11 @@
 import { Schema, model, Document } from 'mongoose';
 import { UserInterface } from './user.model';
 
-interface PinInterface extends Document{
-  pin: number
-  user: UserInterface
-  createdAt: Date
-  isActive: boolean
+interface PinInterface extends Document {
+  pin: number;
+  user: UserInterface;
+  createdAt: Date;
+  isActive: boolean;
 }
 
 const schema = new Schema<PinInterface>({

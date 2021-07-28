@@ -15,24 +15,30 @@ describe('Video', () => {
   });
 
   test('Get video', async () => {
-    if (!user) throw new Error('User doesn\'t exist');
+    if (!user) throw new Error("User doesn't exist");
 
     await user.updateOne({ video: 'tests/static/test.mp4' });
 
-    const response = await request(app).get(`/api/video/${user.id}`).set('Authorization', JWTToken);
+    const response = await request(app)
+      .get(`/api/video/${user.id}`)
+      .set('Authorization', JWTToken);
 
     expect(response.status).toBe(200);
   });
 
   test('Check if video exists', async () => {
-    const validResponse = await request(app).head(`/api/video/${user.id}`).set('Authorization', JWTToken);
+    const validResponse = await request(app)
+      .head(`/api/video/${user.id}`)
+      .set('Authorization', JWTToken);
 
     expect(validResponse.status).toBe(200);
 
-    user.video = (null as any);
+    user.video = null as any;
     await user.save();
 
-    const badResponse = await request(app).head(`/api/video/${user.id}`).set('Authorization', JWTToken);
+    const badResponse = await request(app)
+      .head(`/api/video/${user.id}`)
+      .set('Authorization', JWTToken);
 
     expect(badResponse.status).toBe(404);
   });

@@ -5,5 +5,9 @@ import one from './one';
 import remove from './remove';
 
 export default {
-  post, patch, list, one, remove,
+  post,
+  patch,
+  list,
+  one,
+  remove,
 };

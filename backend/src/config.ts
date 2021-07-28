@@ -9,15 +9,13 @@ class EnvError extends Error {
 }
 
 interface EnvVariables {
-  DB_URL: string
-  SECRET: string
-  ORIGIN: string | Array<string>
-  PORT: string
+  DB_URL: string;
+  SECRET: string;
+  ORIGIN: string | Array<string>;
+  PORT: string;
 }
 
-const {
-  DB_URL, SECRET, ORIGIN, NODE_ENV, PORT,
-} = process.env;
+const { DB_URL, SECRET, ORIGIN, NODE_ENV, PORT } = process.env;
 
 try {
   if (!DB_URL) throw new EnvError('DB_URL');
@@ -32,7 +30,10 @@ try {
 const originArray = ORIGIN?.split(/, |,/);
 
 const CheckedEnvVariables: EnvVariables = {
-  DB_URL, SECRET, ORIGIN: originArray || `localhost:${PORT}`, PORT: PORT || '3000',
+  DB_URL,
+  SECRET,
+  ORIGIN: originArray || `localhost:${PORT}`,
+  PORT: PORT || '3000',
 };
 
 export default CheckedEnvVariables;

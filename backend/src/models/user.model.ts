@@ -1,16 +1,14 @@
-import {
-  Schema, model, Document, PaginateModel,
-} from 'mongoose';
+import { Schema, model, Document, PaginateModel } from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate-v2';
 
-interface UserInterface extends Document<UserInterface>{
-  username: string
-  firstName: string
-  lastName: string
-  role: 'user' | 'admin'
-  passwordHash?: string
-  avatar?: string
-  video?: string
+interface UserInterface extends Document<UserInterface> {
+  username: string;
+  firstName: string;
+  lastName: string;
+  role: 'user' | 'admin';
+  passwordHash?: string;
+  avatar?: string;
+  video?: string;
 }
 
 const schema = new Schema({
@@ -42,6 +40,9 @@ const schema = new Schema({
 
 schema.plugin(mongoosePaginate);
 
-const UserModel: PaginateModel<UserInterface> = model<UserInterface, PaginateModel<UserInterface>>('User', schema);
+const UserModel: PaginateModel<UserInterface> = model<
+  UserInterface,
+  PaginateModel<UserInterface>
+>('User', schema);
 
 export { UserModel, UserInterface };

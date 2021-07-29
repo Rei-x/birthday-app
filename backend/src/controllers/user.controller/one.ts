@@ -7,7 +7,10 @@ const one = createRequestHandler(
   async (req: Request, res: Response) => {
     const { userId } = req.params;
 
-    const user = await UserModel.findById(userId);
+    const user = await UserModel.findById(
+      userId,
+      'role username firstName lastName'
+    );
 
     if (!user) {
       res.sendStatus(404);

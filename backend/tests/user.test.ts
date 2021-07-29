@@ -3,9 +3,10 @@ import rimraf from 'rimraf';
 import app from '../src/app';
 import { UserInterface, UserModel } from '../src/models';
 import 'jest-extended';
-import { connectToMemoryDatabase, createTestUser, getUserJWT } from './utils';
+import { connectToMemoryDatabase, createTestUser } from './utils';
 import { closeConnectionToDatabase } from '../src/db';
 import config from '../src/config';
+import { generateJWT } from '../src/utils';
 
 describe('User', () => {
   let adminJWTToken: string;
@@ -18,11 +19,11 @@ describe('User', () => {
       username: 'adminUser',
       role: 'admin',
     });
-    adminJWTToken = await getUserJWT(adminUser);
+    adminJWTToken = await generateJWT(adminUser);
     normalUser = await createTestUser({
       username: 'normalUser',
     });
-    userJWTToken = await getUserJWT(normalUser);
+    userJWTToken = await generateJWT(normalUser);
   });
 
   jest.setTimeout(10000);
@@ -52,20 +53,17 @@ describe('User', () => {
   });
 
   test('Getting one user', async () => {
-    const user = await UserModel.findOne();
-
-    expect(user).not.toBeUndefined();
-
     const response = await request(app)
-      .get(`/api/user/${user!.id}`)
-      .set('Authorization', adminJWTToken);
+      .get(`/api/user/${normalUser.id}`)
+      .set('Authorization', userJWTToken);
     expect(response.status).toBe(200);
     expect(response.body).toContainEntries([
-      ['username', user!.username],
-      ['role', user!.role],
-      ['firstName', user!.firstName],
-      ['lastName', user!.lastName],
+      ['username', normalUser.username],
+      ['role', normalUser.role],
+      ['firstName', normalUser.firstName],
+      ['lastName', normalUser.lastName],
     ]);
+    expect(response.body).not.toContainKeys(['avatar', 'video']);
   });
 
   test('Listing users with adminJWT', async () => {
@@ -88,12 +86,16 @@ describe('User', () => {
     ]);
   });
 
-  test('Listing users with userJWT should include only first name and last name', async () => {
+  test('Listing users with userJWT should include only username, first name and last name', async () => {
     const response = await request(app)
       .get('/api/user')
       .set('Authorization', userJWTToken);
     expect(response.status).toBe(200);
-    expect(response.body.docs[0]).toContainAllKeys(['firstName', 'lastName']);
+    expect(response.body.docs[0]).toContainAllKeys([
+      'username',
+      'firstName',
+      'lastName',
+    ]);
   });
 
   test('Updating user', async () => {
@@ -133,7 +135,7 @@ describe('User', () => {
     expect(firstUser).not.toBeNull();
 
     const secondUser = await createTestUser();
-    const secondUserJWTToken = await getUserJWT(secondUser);
+    const secondUserJWTToken = await generateJWT(secondUser);
 
     const newData = {
       firstName: 'Luigi',

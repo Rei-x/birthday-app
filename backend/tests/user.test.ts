@@ -100,7 +100,7 @@ describe('User', () => {
       .patch(`/api/user/${normalUser!.id}`)
       .attach('avatar', 'tests/static/test.jpg')
       .attach('video', 'tests/static/test.mp4')
-      .set('Authorization', userJWTToken);
+      .set('Authorization', adminJWTToken);
 
     expect(response.status).toBe(200);
     expect(response.body).toStrictEqual({});

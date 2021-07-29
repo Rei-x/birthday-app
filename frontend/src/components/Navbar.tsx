@@ -11,12 +11,10 @@ const Navigation = () => {
   const logout = () => {
     if (setContext) {
       setContext((oldContext) => ({
-        ...oldContext,
-        JWT: undefined,
-        user: undefined,
+        addNotification: oldContext.addNotification,
       }));
     }
-    localStorage.removeItem('JWT');
+    localStorage.clear();
   };
 
   return (

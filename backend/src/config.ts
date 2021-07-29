@@ -13,6 +13,7 @@ interface EnvVariables {
   SECRET: string;
   ORIGIN: string | Array<string>;
   PORT: string;
+  UPLOAD_PATH: string;
 }
 
 const { DB_URL, SECRET, ORIGIN, NODE_ENV, PORT } = process.env;
@@ -34,6 +35,10 @@ const CheckedEnvVariables: EnvVariables = {
   SECRET,
   ORIGIN: originArray || `localhost:${PORT}`,
   PORT: PORT || '3000',
+  UPLOAD_PATH:
+    NODE_ENV === 'test'
+      ? `${__dirname}/../testUploads`
+      : `${__dirname}/../uploads`,
 };
 
 export default CheckedEnvVariables;

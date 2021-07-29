@@ -5,6 +5,7 @@ import { UserInterface, UserModel } from '../src/models';
 import 'jest-extended';
 import { connectToMemoryDatabase, createTestUser, getUserJWT } from './utils';
 import { closeConnectionToDatabase } from '../src/db';
+import config from '../src/config';
 
 describe('User', () => {
   let adminJWTToken: string;
@@ -153,6 +154,6 @@ describe('User', () => {
 
   afterAll(async () => {
     await closeConnectionToDatabase();
-    rimraf.sync('uploads');
+    rimraf.sync(config.UPLOAD_PATH);
   });
 });

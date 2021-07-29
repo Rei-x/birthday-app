@@ -5,16 +5,15 @@ import mkdirp from 'mkdirp';
 import randomstring from 'randomstring';
 import { userController } from '../controllers';
 import { isAuthed } from '../middlewares';
+import config from '../config';
 
 const router = Router();
 
-const uploadPath = 'uploads/';
-
-mkdirp.sync(uploadPath);
+mkdirp.sync(config.UPLOAD_PATH);
 
 const storage = multer.diskStorage({
   destination: (_req, _file, cb) => {
-    cb(null, uploadPath);
+    cb(null, config.UPLOAD_PATH);
   },
   filename: (_req, file, cb) => {
     cb(

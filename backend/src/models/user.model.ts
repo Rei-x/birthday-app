@@ -7,7 +7,7 @@ interface UserInterface extends Document<UserInterface> {
   lastName: string;
   role: 'user' | 'admin';
   passwordHash?: string;
-  avatar?: string;
+  avatar: string;
   video?: string;
 }
 
@@ -33,7 +33,7 @@ const schema = new Schema({
   passwordHash: String,
   avatar: {
     type: String,
-    default: 'uploads/defaultuser.png',
+    default: 'static/defaultAvatar.png',
   },
   video: String,
 });

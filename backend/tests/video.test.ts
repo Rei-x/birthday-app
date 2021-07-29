@@ -2,7 +2,8 @@ import request from 'supertest';
 import app from '../src/app';
 import { closeConnectionToDatabase } from '../src/db';
 import { UserInterface } from '../src/models';
-import { connectToMemoryDatabase, createTestUser, getUserJWT } from './utils';
+import { connectToMemoryDatabase, createTestUser } from './utils';
+import { generateJWT } from '../src/utils';
 
 describe('Video', () => {
   let user: UserInterface;
@@ -11,7 +12,7 @@ describe('Video', () => {
   beforeAll(async () => {
     await connectToMemoryDatabase();
     user = await createTestUser();
-    JWTToken = await getUserJWT(user);
+    JWTToken = await generateJWT(user);
   });
 
   test('Get video', async () => {

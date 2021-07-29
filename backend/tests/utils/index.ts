@@ -1,11 +1,8 @@
-import jwt from 'jsonwebtoken';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import bcrypt from 'bcryptjs';
 import { connectToDatabase } from '../../src/db';
-import { UserInterface, UserModel } from '../../src/models';
-import { JWTInterface } from '../../src/interfaces';
-import config from '../../src/config';
+import { UserModel } from '../../src/models';
 
 export const connectToMemoryDatabase = async () => {
   const mongod = new MongoMemoryServer();
@@ -43,17 +40,3 @@ export const createTestUser = async (testUser?: TestUserInterface) => {
 
   return UserModel.create(userData);
 };
-
-export const getUserJWT = async (user: UserInterface): Promise<string> =>
-  new Promise((resolve) => {
-    jwt.sign(
-      <JWTInterface>{
-        userId: user.id,
-        role: user.role,
-      },
-      config.SECRET,
-      (_err, encoded) => {
-        resolve(`Bearer ${encoded}`);
-      }
-    );
-  });

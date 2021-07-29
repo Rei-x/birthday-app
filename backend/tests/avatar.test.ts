@@ -4,7 +4,8 @@ import path from 'path';
 import app from '../src/app';
 import { closeConnectionToDatabase } from '../src/db';
 import { UserInterface } from '../src/models';
-import { connectToMemoryDatabase, createTestUser, getUserJWT } from './utils';
+import { connectToMemoryDatabase, createTestUser } from './utils';
+import { generateJWT } from '../src/utils';
 
 describe('Avatar', () => {
   let user: UserInterface;
@@ -13,7 +14,7 @@ describe('Avatar', () => {
   beforeAll(async () => {
     await connectToMemoryDatabase();
     user = await createTestUser({ role: 'user' });
-    userJWT = await getUserJWT(user);
+    userJWT = await generateJWT(user);
   });
   test('Retrieving user avatar using username', async () => {
     const response = await request(app)

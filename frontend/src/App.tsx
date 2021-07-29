@@ -6,14 +6,14 @@ import {
   Redirect,
 } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
-import { Container, Spinner, ToastContainer } from 'react-bootstrap';
+import { ToastContainer } from 'react-bootstrap';
 import Navbar from './components/Navbar';
 import './app.scss';
 import * as views from './views';
 import { UserContext } from './contexts';
 import { NotificationInterface } from './interfaces';
 import { useApi } from './hooks';
-import { Toast, Footer } from './components';
+import { Toast, Footer, Loading } from './components';
 import { GlobalContextInterface } from './api';
 
 const App = () => {
@@ -80,11 +80,7 @@ const App = () => {
   }, [context.addNotification, api]);
 
   return loading ? (
-    <Container className="vertical-center">
-      <Spinner animation="border" role="status" className="mx-auto">
-        <span className="visually-hidden">Loading...</span>
-      </Spinner>
-    </Container>
+    <Loading />
   ) : (
     <UserContext.Provider value={[context, setContext]}>
       <Router>

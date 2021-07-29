@@ -13,6 +13,7 @@ import VodkaPoll from './userDashboard/VodkaPoll';
 import Accompaniment from './userDashboard/Accompaniment';
 import Shortcuts from './userDashboard/Shortcuts';
 import Footer from './Footer';
+import Loading from './Loading';
 
 export {
   Navbar,
@@ -30,4 +31,5 @@ export {
   Accompaniment,
   Shortcuts,
   Footer,
+  Loading,
 };

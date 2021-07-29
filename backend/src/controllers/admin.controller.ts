@@ -8,7 +8,7 @@ const post = createRequestHandler(
   async (req, res) => {
     const { username, password } = req.body;
 
-    const user = await UserModel.findOne({ username }, 'passwordHash role');
+    const user = await UserModel.findOne({ username });
 
     if (!user?.passwordHash) {
       res.sendStatus(404);

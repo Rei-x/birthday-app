@@ -21,6 +21,9 @@ const onlyAdminFieldsAreInRequest = (req: Request): boolean => {
 const userRequestsHisUserId = (req: Request, res: Response): boolean =>
   req.params.userId === res.locals.user.id;
 
+const isUserIdInRequestParams = (req: Request): boolean =>
+  req.params.userId !== undefined;
+
 const userHasPermission = (
   req: Request,
   res: Response,
@@ -30,6 +33,7 @@ const userHasPermission = (
   if (res.locals.user.role === 'user' && requiredRole === 'admin') return false;
   if (onlyAdminFieldsAreInRequest(req)) return false;
   if (userRequestsHisUserId(req, res)) return true;
+  if (requiredRole === 'user' && !isUserIdInRequestParams(req)) return true;
   return false;
 };
 

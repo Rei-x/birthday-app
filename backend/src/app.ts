@@ -3,14 +3,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import { connectToDatabase } from './db';
 import config from './config';
-import {
-  tokenRoute,
-  docsRoute,
-  userRoute,
-  videoRoute,
-  adminRoute,
-  pinRoute,
-} from './routes';
+import routes from './routes';
 
 if (process.env.NODE_ENV !== 'test') {
   connectToDatabase(config.DB_URL);
@@ -27,9 +20,9 @@ app.use(
   })
 );
 
-app.use('/api', [tokenRoute, userRoute, videoRoute, adminRoute, pinRoute]);
+app.use('/api', routes.api);
 
-app.use('/docs', docsRoute);
+app.use('/docs', routes.docs);
 
 app.use((_req, res) => {
   const error = new Error('Not found');

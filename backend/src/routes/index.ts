@@ -5,5 +5,9 @@ import docsRoute from './docs.route';
 import videoRoute from './video.route';
 import adminRoute from './admin.route';
 import pinRoute from './pin.route';
+import avatarRoute from './avatar.route';
 
-export { userRoute, tokenRoute, docsRoute, videoRoute, adminRoute, pinRoute };
+export default {
+  docs: docsRoute,
+  api: [userRoute, tokenRoute, videoRoute, adminRoute, pinRoute, avatarRoute],
+};

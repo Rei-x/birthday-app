@@ -20,6 +20,7 @@ interface TestUserInterface {
   lastName?: string;
   role?: 'user' | 'admin';
   password?: string;
+  avatar?: string;
 }
 
 export const createTestUser = async (testUser?: TestUserInterface) => {

@@ -1,4 +1,7 @@
 export interface JWTInterface {
-  userId?: string;
-  role?: string;
+  id: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  role: string;
 }

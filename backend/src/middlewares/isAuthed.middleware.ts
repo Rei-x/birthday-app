@@ -49,7 +49,7 @@ const validateToken =
     jwt.verify(
       token,
       config.SECRET,
-      (_err, decoded: JWTInterface | undefined) => {
+      (_err, decoded: Partial<JWTInterface> | undefined) => {
         if (!decoded) {
           res.sendStatus(401);
           return;

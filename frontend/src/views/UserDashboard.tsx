@@ -7,21 +7,21 @@ import {
   TimeRemaining,
   VodkaPoll,
   Weather,
+  Loading,
 } from '../components';
 import { UserContext } from '../contexts';
 import { UserInterface } from '../interfaces';
+import { useApi } from '../hooks';
 
 const UserDashboard = () => {
   const [context] = useContext(UserContext);
+  const api = useApi();
   const user = context.user as UserInterface;
 
-  const avatarUrl =
-    'https://robohash.org/60d26ee9c88916cd6a86c27ca987ce53?set=set4&bgset=bg2&size=400x400';
-
-  return (
+  return api ? (
     <Container className="navbar-margin">
       <div className="d-flex ms-3 mb-5">
-        <Avatar url={avatarUrl} />
+        <Avatar url={api.getAvatarUrl()} />
         <h2 className="ms-3" style={{ marginTop: '10px' }}>
           Hej <b>{user?.firstName}!</b>
         </h2>
@@ -32,6 +32,8 @@ const UserDashboard = () => {
       <Accompaniment />
       <Shortcuts />
     </Container>
+  ) : (
+    <Loading />
   );
 };
 

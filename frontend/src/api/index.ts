@@ -19,17 +19,20 @@ export interface GlobalContextInterface {
 class Api {
   JWT: string;
 
-  userId: string;
+  user: UserInterface;
 
   client: typeof ky;
-
-  role: string;
 
   constructor(JWT: string) {
     const decodedJWT = jwt_decode<JWTInterface>(JWT);
     this.JWT = JWT;
-    this.userId = decodedJWT.id;
-    this.role = decodedJWT.role;
+    this.user = {
+      _id: decodedJWT.id,
+      username: decodedJWT.username,
+      firstName: decodedJWT.firstName,
+      lastName: decodedJWT.lastName,
+      role: decodedJWT.role,
+    };
     this.client = ky.extend({
       prefixUrl: BASE_URL,
       hooks: {
@@ -43,7 +46,7 @@ class Api {
   }
 
   async getProfile(): Promise<UserInterface> {
-    return this.client.get(`api/user/${this.userId}`).json<UserInterface>();
+    return this.client.get(`api/user/${this.user._id}`).json<UserInterface>();
   }
 
   async getUsers(): Promise<PaginatedUsers> {
@@ -59,7 +62,11 @@ class Api {
   }
 
   getVideoLink(userId?: string): string {
-    return `${BASE_URL}/api/video/${userId || this.userId}`;
+    return `${BASE_URL}/api/video/${userId || this.user._id}`;
+  }
+
+  getAvatarUrl(username?: string): string {
+    return `${BASE_URL}/api/avatar/${username || this.user.username}`;
   }
 
   async getJWT(pin: number): Promise<PinInterface> {
@@ -68,7 +75,7 @@ class Api {
 
   async checkForVideo(): Promise<boolean> {
     try {
-      await this.client.head(`api/video/${this.userId}`);
+      await this.client.head(`api/video/${this.user._id}`);
       return true;
     } catch (e) {
       return false;

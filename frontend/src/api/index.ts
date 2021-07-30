@@ -19,7 +19,10 @@ export interface GlobalContextInterface {
 class Api {
   JWT: string;
 
-  user: UserInterface;
+  user: Pick<
+    UserInterface,
+    '_id' | 'username' | 'firstName' | 'lastName' | 'lastName' | 'role'
+  >;
 
   client: typeof ky;
 
@@ -83,7 +86,9 @@ class Api {
   }
 
   async postUser(formData: FormData): Promise<boolean> {
-    return this.client.post('api/user', { body: formData, timeout: 2147483647 }).json();
+    return this.client
+      .post('api/user', { body: formData, timeout: 2147483647 })
+      .json();
   }
 
   async updateUser(formData: FormData, userId: string): Promise<boolean> {

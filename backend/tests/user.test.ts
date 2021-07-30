@@ -95,6 +95,7 @@ describe('User', () => {
       'username',
       'firstName',
       'lastName',
+      'hasConfirmedAttendance',
     ]);
   });
 

@@ -9,7 +9,9 @@ const list = async (req: Request, res: Response) => {
 
   const offset = getOffsetFromPage(<string>page || 1);
 
-  const userOptions = { select: 'username firstName lastName -_id' };
+  const userOptions = {
+    select: 'username firstName lastName hasConfirmedAttendance -_id',
+  };
   const adminOptions = {};
   const additionalOptions = role === 'admin' ? adminOptions : userOptions;
 

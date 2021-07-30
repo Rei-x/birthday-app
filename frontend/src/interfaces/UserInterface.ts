@@ -8,4 +8,5 @@ export interface UserInterface {
   video?: string;
   hasCompletedPoll: boolean;
   hasCompletedVodkaPoll: boolean;
+  hasConfirmedAttendance: boolean;
 }

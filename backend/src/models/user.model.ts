@@ -12,6 +12,7 @@ interface UserInterface extends Document<UserInterface> {
   video?: string;
   hasCompletedPoll: boolean;
   hasCompletedVodkaPoll: boolean;
+  hasConfirmedAttendance: boolean;
 }
 
 const schema = new Schema({
@@ -38,6 +39,7 @@ const schema = new Schema({
     type: String,
     default: path.join(__dirname, '../../', '/static/defaultAvatar.png'),
   },
+  video: String,
   hasCompletedPoll: {
     type: Boolean,
     default: false,
@@ -46,7 +48,10 @@ const schema = new Schema({
     type: Boolean,
     default: false,
   },
-  video: String,
+  hasConfirmedAttendance: {
+    type: Boolean,
+    default: false,
+  }
 });
 
 schema.plugin(mongoosePaginate);

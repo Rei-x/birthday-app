@@ -11,6 +11,11 @@ $violet: #6a70eb;
   --animate-duration: 0.8s;
 }
 
+.form-check-input,
+.form-check-label {
+  cursor: pointer;
+}
+
 .navbar-margin {
   margin-top: 6rem;
 }
@@ -113,11 +118,13 @@ $violet: #6a70eb;
 }
 
 .shortcuts {
+  &__wrapper {
+    width: 100%;
+  }
   &__list {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 100%;
+    justify-content: center;
   }
   &__item {
     font-family: inherit;
@@ -128,7 +135,7 @@ $violet: #6a70eb;
     border-radius: 4px;
     text-align: center;
     vertical-align: middle;
-    width: 30%;
+    width: 90px;
     height: 70px;
     line-height: 50px;
     border: none;

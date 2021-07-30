@@ -4,7 +4,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import Widget from './Widget';
 
 const Shortcuts = () => (
-  <Widget>
+  <Widget className="justify-content-center">
     <div className="shortcuts__wrapper">
       <h5>Skróty</h5>
       <div className="shortcuts__list">

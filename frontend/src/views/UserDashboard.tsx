@@ -1,15 +1,15 @@
 import React, { useContext } from 'react';
-import { Button, Container } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
+import { Container } from 'react-bootstrap';
 import {
-  Accompaniment,
+  AccompanimentWidget,
   Avatar,
-  Shortcuts,
-  TimeRemaining,
-  VodkaPoll,
-  Weather,
+  ShortcutsWidget,
+  TimeRemainingWidget,
+  VodkaPollWidget,
+  WeatherWidget,
   Loading,
-  Widget,
+  AttendanceWidget,
+  PollWidget,
 } from '../components';
 import { UserContext } from '../contexts';
 import { UserInterface } from '../interfaces';
@@ -28,23 +28,15 @@ const UserDashboard = () => {
           Hej <b>{user?.firstName}!</b>
         </h2>
       </div>
+      <AttendanceWidget />
       {!user.hasCompletedPoll && (
-        <Widget>
-          <div>
-            <h5>WAŻNE: wypełnij ankietę</h5>
-          </div>
-          <div>
-            <LinkContainer to="/poll">
-              <Button>Ankieta</Button>
-            </LinkContainer>
-          </div>
-        </Widget>
+        <PollWidget />
       )}
-      <Weather />
-      <TimeRemaining />
-      <VodkaPoll />
-      <Accompaniment />
-      <Shortcuts />
+      <WeatherWidget />
+      <TimeRemainingWidget />
+      {!user.hasCompletedVodkaPoll && <VodkaPollWidget />}
+      <AccompanimentWidget />
+      <ShortcutsWidget />
     </Container>
   ) : (
     <Loading />

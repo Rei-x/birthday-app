@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
-import { Container } from 'react-bootstrap';
+import { Button, Container } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import {
   Accompaniment,
   Avatar,
@@ -8,6 +9,7 @@ import {
   VodkaPoll,
   Weather,
   Loading,
+  Widget,
 } from '../components';
 import { UserContext } from '../contexts';
 import { UserInterface } from '../interfaces';
@@ -26,6 +28,18 @@ const UserDashboard = () => {
           Hej <b>{user?.firstName}!</b>
         </h2>
       </div>
+      {!user.hasCompletedPoll && (
+        <Widget>
+          <div>
+            <h5>WAŻNE: wypełnij ankietę</h5>
+          </div>
+          <div>
+            <LinkContainer to="/poll">
+              <Button>Ankieta</Button>
+            </LinkContainer>
+          </div>
+        </Widget>
+      )}
       <Weather />
       <TimeRemaining />
       <VodkaPoll />

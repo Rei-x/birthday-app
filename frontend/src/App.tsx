@@ -109,6 +109,9 @@ const App = () => {
               <Route path="/faq">
                 <views.FaqView />
               </Route>
+              <Route path="/video">
+                <views.VideoView />
+              </Route>
             </>
           ) : (
             <Redirect to="/pin" />

@@ -6,6 +6,7 @@ import PinView from './authorization/Pin';
 import PollView from './Poll';
 import UserDashboardView from './UserDashboard';
 import FaqView from './Faq';
+import VideoView from './Video';
 
 export {
   MainView,
@@ -16,4 +17,5 @@ export {
   PollView,
   UserDashboardView,
   FaqView,
+  VideoView
 };

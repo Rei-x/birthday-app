@@ -11,12 +11,16 @@ const Shortcuts = () => (
         <LinkContainer to="/faq">
           <Button className="shortcuts__item shortcuts__item--faq">FAQ</Button>
         </LinkContainer>
-        <Button className="shortcuts__item shortcuts__item--video">
-          Wideo powitalne
-        </Button>
-        <Button className="shortcuts__item shortcuts__item--guests">
-          Lista gości
-        </Button>
+        <LinkContainer to="/video">
+          <Button className="shortcuts__item shortcuts__item--video">
+            Wideo powitalne
+          </Button>
+        </LinkContainer>
+        <LinkContainer to="/guest-list">
+          <Button className="shortcuts__item shortcuts__item--guests">
+            Lista gości
+          </Button>
+        </LinkContainer>
       </div>
     </div>
   </Widget>

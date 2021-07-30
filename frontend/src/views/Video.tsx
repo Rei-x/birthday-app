@@ -1,4 +1,4 @@
-import React /* { useContext } */ from 'react';
+import React from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { useApi } from '../hooks';
@@ -23,7 +23,7 @@ const Video = () => {
             <source src={api?.getVideoLink()} type="video/mp4" />
           </video>
           <Button onClick={() => history.push('/')} className="mt-3">
-            Dalej
+            Przejdź do głównego panelu
           </Button>
         </Col>
       </Row>

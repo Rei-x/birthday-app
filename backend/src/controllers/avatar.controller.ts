@@ -1,5 +1,4 @@
 import { param } from 'express-validator';
-import path from 'path';
 import { UserModel } from '../models';
 import createRequestHandler from './createRequestHandler';
 
@@ -14,7 +13,7 @@ const get = createRequestHandler(
       return;
     }
 
-    res.sendFile(path.join(__dirname, '../../', user.avatar));
+    res.sendFile(user.avatar);
   },
   {
     validators: param('username').isString(),

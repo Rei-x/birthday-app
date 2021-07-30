@@ -1,3 +1,4 @@
+import path from 'path';
 import { Schema, model, Document, PaginateModel } from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate-v2';
 
@@ -9,6 +10,8 @@ interface UserInterface extends Document<UserInterface> {
   passwordHash?: string;
   avatar: string;
   video?: string;
+  hasCompletedPoll: boolean;
+  hasCompletedVodkaPoll: boolean;
 }
 
 const schema = new Schema({
@@ -33,7 +36,15 @@ const schema = new Schema({
   passwordHash: String,
   avatar: {
     type: String,
-    default: 'static/defaultAvatar.png',
+    default: path.join(__dirname, '../../', '/static/defaultAvatar.png'),
+  },
+  hasCompletedPoll: {
+    type: Boolean,
+    default: false,
+  },
+  hasCompletedVodkaPoll: {
+    type: Boolean,
+    default: false,
   },
   video: String,
 });

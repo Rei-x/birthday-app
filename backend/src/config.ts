@@ -30,10 +30,12 @@ try {
 
 const originArray = ORIGIN?.split(/, |,/);
 
+const origin = originArray?.length === 1 ? originArray.join('') : originArray
+
 const CheckedEnvVariables: EnvVariables = {
   DB_URL,
   SECRET,
-  ORIGIN: originArray || `localhost:${PORT}`,
+  ORIGIN: origin || `localhost:${PORT}`,
   PORT: PORT || '3000',
   UPLOAD_PATH:
     NODE_ENV === 'test'

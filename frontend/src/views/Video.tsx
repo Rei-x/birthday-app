@@ -1,11 +1,9 @@
 import React /* { useContext } */ from 'react';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-// import { UserContext } from '../contexts';
 import { useApi } from '../hooks';
 
 const Video = () => {
-  // const [context] = useContext(UserContext);
   const api = useApi();
   const history = useHistory();
 
@@ -18,7 +16,7 @@ const Video = () => {
             controls
             disablePictureInPicture
             controlsList="nodownload noremoteplayback"
-            width="100%"
+            width="360"
             height="640"
             poster="https://i.imgur.com/XVPLOg3.png"
           >

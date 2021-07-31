@@ -51,7 +51,7 @@ const schema = new Schema({
   hasConfirmedAttendance: {
     type: Boolean,
     default: false,
-  }
+  },
 });
 
 schema.plugin(mongoosePaginate);

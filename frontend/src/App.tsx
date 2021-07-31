@@ -70,7 +70,10 @@ const App = () => {
             'Błąd',
             <p>Coś poszło nie tak, spróbuj jeszcze raz się zalogować.</p>
           );
-          localStorage.removeItem('JWT');
+          localStorage.clear();
+          setContext((oldContext) => ({
+            addNotification: oldContext.addNotification,
+          }));
         }
         setLoading(false);
       }

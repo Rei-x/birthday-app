@@ -91,9 +91,11 @@ class Api {
       .json();
   }
 
-  async updateUser(formData: FormData, userId: string): Promise<boolean> {
+  async updateUser(formData: FormData, userId?: string): Promise<boolean> {
     try {
-      await this.client.patch(`api/user/${userId}`, { body: formData });
+      await this.client.patch(`api/user/${userId || this.user._id}`, {
+        body: formData,
+      });
       return true;
     } catch (e) {
       return false;

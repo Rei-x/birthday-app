@@ -106,9 +106,11 @@ const App = () => {
               <Route path="/" exact>
                 <views.UserDashboardView />
               </Route>
-              <Route path="/poll">
-                <views.PollView />
-              </Route>
+              {!context.user.hasCompletedPoll && (
+                <Route path="/poll">
+                  <views.PollView />
+                </Route>
+              )}
               <Route path="/faq">
                 <views.FaqView />
               </Route>

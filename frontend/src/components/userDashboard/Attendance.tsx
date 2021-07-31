@@ -2,15 +2,45 @@ import React, { useContext, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import Widget from './Widget';
 import { UserContext } from '../../contexts';
+import { useApi } from '../../hooks';
 
 const Attendance = () => {
-  const [context] = useContext(UserContext);
+  const [context, setContext] = useContext(UserContext);
   const [attendance, setAttendance] = useState(
     context?.user?.hasConfirmedAttendance || false
   );
+  const api = useApi();
 
-  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    setAttendance(e.target.value === 'yes');
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = async (
+    e
+  ) => {
+    const answer = e.target.value === 'yes';
+    setAttendance(answer);
+
+    const formData = new FormData();
+    formData.append('hasConfirmedAttendance', answer.toString());
+
+    const success = await api?.updateUser(formData);
+
+    context.addNotification(
+      'Uczestnictwo',
+      success
+        ? 'Zaktualizowano status twojej obecności na imprezie.'
+        : 'Z jakiegoś powodu nie udało się zaktualizować statusu twojej obecności.'
+    );
+
+    if (setContext)
+      setContext((oldContext) => {
+        if (oldContext.user)
+          return {
+            ...oldContext,
+            user: {
+              ...oldContext.user,
+              hasConfirmedAttendance: answer,
+            },
+          };
+        return oldContext;
+      });
   };
 
   return (
@@ -24,7 +54,6 @@ const Attendance = () => {
           label="Tak"
           name="attendancexd"
           type="radio"
-          id="attendance-yes"
           value="yes"
           checked={attendance}
           onChange={handleChange}
@@ -33,7 +62,6 @@ const Attendance = () => {
           label="Nie"
           name="attendancexd"
           type="radio"
-          id="attendance-no"
           value="no"
           checked={!attendance}
           onChange={handleChange}

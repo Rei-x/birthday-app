@@ -80,6 +80,7 @@ const UsersTable = ({ users, update }: TableProps) => {
             <th>First name</th>
             <th>Last name</th>
             <th>Avatar</th>
+            <th>Attendance</th>
             <th>Greeting video</th>
             <th>Options</th>
           </tr>
@@ -92,6 +93,7 @@ const UsersTable = ({ users, update }: TableProps) => {
               <td>{user.firstName}</td>
               <td>{user.lastName}</td>
               <td>{user.avatar}</td>
+              <td><Form.Check type="checkbox" disabled checked={user.hasConfirmedAttendance}/></td>
               <td>
                 {user.video ? (
                   <a

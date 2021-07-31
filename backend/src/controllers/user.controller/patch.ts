@@ -1,4 +1,5 @@
 import { body, ValidationChain } from 'express-validator';
+import 'multer';
 import { UserModel } from '../../models';
 import { isImage, isVideo } from '../../validators';
 import createRequestHandler from '../createRequestHandler';
@@ -7,6 +8,7 @@ const createUserValidator: ValidationChain[] = [
   body('username').isString().isLength({ min: 3 }).optional(),
   body('firstName').isString().isLength({ min: 3 }).optional(),
   body('lastName').isString().isLength({ min: 3 }).optional(),
+  body('hasConfirmedAttendance').isString().isLength({ min: 3 }).optional(),
 ];
 
 const deleteUndefinedValuesFromObject = (obj: Record<string, any>) => {
@@ -22,7 +24,13 @@ const deleteUndefinedValuesFromObject = (obj: Record<string, any>) => {
 const patch = createRequestHandler(
   async (req, res) => {
     const { userId } = req.params;
-    const { username, firstName, lastName } = req.body;
+    const {
+      username,
+      firstName,
+      lastName,
+      hasConfirmedAttendance,
+      hasCompletedPoll,
+    } = req.body;
     const { avatar, video } = req.files as unknown as {
       [fieldname: string]: Express.Multer.File[];
     };
@@ -36,6 +44,8 @@ const patch = createRequestHandler(
       username,
       firstName,
       lastName,
+      hasConfirmedAttendance,
+      hasCompletedPoll,
       avatar: avatarFilePath,
       video: videoFilePath,
     };

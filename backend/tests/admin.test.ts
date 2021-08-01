@@ -18,7 +18,9 @@ describe('Admin', () => {
       password,
     };
 
-    const response = await request(app).post('/api/admin/login').send(loginData);
+    const response = await request(app)
+      .post('/api/admin/login')
+      .send(loginData);
     expect(response.status).toBe(200);
     expect(response.body.JWT).toBeString();
   });

@@ -4,13 +4,18 @@ import { Middleware } from 'express-validator/src/base';
 import { checkValidation } from '../middlewares';
 
 interface RequestHandlerInterface {
-  middlewares?: Array<RequestHandler>
-  validators?: Array<ValidationChain> | ValidationChain | Middleware & {
-    run: (req: Request) => Promise<Result<any>>; }
+  middlewares?: Array<RequestHandler>;
+  validators?:
+    | Array<ValidationChain>
+    | ValidationChain
+    | (Middleware & {
+        run: (req: Request) => Promise<Result<any>>;
+      });
 }
 
 const createRequestHandler = (
-  callback: RequestHandler, options: RequestHandlerInterface,
+  callback: RequestHandler,
+  options: RequestHandlerInterface
 ): Array<RequestHandler> => {
   const ArrayOfRequestHandlers: Array<RequestHandler> = [];
 

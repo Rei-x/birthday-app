@@ -1,16 +1,18 @@
-import {
-  Schema, model, Document, PaginateModel,
-} from 'mongoose';
+import path from 'path';
+import { Schema, model, Document, PaginateModel } from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate-v2';
 
-interface UserInterface extends Document<UserInterface>{
-  username: string
-  firstName: string
-  lastName: string
-  role: 'user' | 'admin'
-  passwordHash?: string
-  avatar?: string
-  video?: string
+interface UserInterface extends Document<UserInterface> {
+  username: string;
+  firstName: string;
+  lastName: string;
+  role: 'user' | 'admin';
+  passwordHash?: string;
+  avatar: string;
+  video?: string;
+  hasCompletedPoll: boolean;
+  vodkaPollChoice: string;
+  hasConfirmedAttendance: 'yes' | 'idk' | 'no';
 }
 
 const schema = new Schema({
@@ -35,13 +37,29 @@ const schema = new Schema({
   passwordHash: String,
   avatar: {
     type: String,
-    default: 'uploads/defaultuser.png',
+    default: path.join(__dirname, '../../', '/static/defaultAvatar.png'),
   },
   video: String,
+  hasCompletedPoll: {
+    type: Boolean,
+    default: false,
+  },
+  vodkaPollChoice: {
+    type: String,
+    default: 'idk',
+  },
+  hasConfirmedAttendance: {
+    type: String,
+    default: 'idk',
+    enum: ['yes', 'idk', 'no'],
+  },
 });
 
 schema.plugin(mongoosePaginate);
 
-const UserModel: PaginateModel<UserInterface> = model<UserInterface, PaginateModel<UserInterface>>('User', schema);
+const UserModel: PaginateModel<UserInterface> = model<
+  UserInterface,
+  PaginateModel<UserInterface>
+>('User', schema);
 
 export { UserModel, UserInterface };

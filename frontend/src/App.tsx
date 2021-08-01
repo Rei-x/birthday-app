@@ -6,14 +6,14 @@ import {
   Redirect,
 } from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
-import { Container, Spinner, ToastContainer } from 'react-bootstrap';
+import { ToastContainer } from 'react-bootstrap';
 import Navbar from './components/Navbar';
 import './app.scss';
 import * as views from './views';
 import { UserContext } from './contexts';
 import { NotificationInterface } from './interfaces';
 import { useApi } from './hooks';
-import { Toast, Footer } from './components';
+import { Toast, Footer, Loading } from './components';
 import { GlobalContextInterface } from './api';
 
 const App = () => {
@@ -70,7 +70,10 @@ const App = () => {
             'Błąd',
             <p>Coś poszło nie tak, spróbuj jeszcze raz się zalogować.</p>
           );
-          localStorage.removeItem('JWT');
+          localStorage.clear();
+          setContext((oldContext) => ({
+            addNotification: oldContext.addNotification,
+          }));
         }
         setLoading(false);
       }
@@ -80,11 +83,7 @@ const App = () => {
   }, [context.addNotification, api]);
 
   return loading ? (
-    <Container className="vertical-center">
-      <Spinner animation="border" role="status" className="mx-auto">
-        <span className="visually-hidden">Loading...</span>
-      </Spinner>
-    </Container>
+    <Loading />
   ) : (
     <UserContext.Provider value={[context, setContext]}>
       <Router>
@@ -102,32 +101,45 @@ const App = () => {
           <Route path="/404">
             <views.NotFoundView />
           </Route>
-          {context.user ? (
-            <>
-              <Route path="/" exact>
-                <views.UserDashboardView />
-              </Route>
-              <Route path="/poll">
-                <views.PollView />
-              </Route>
-              <Route path="/faq">
-                <views.FaqView />
-              </Route>
-            </>
-          ) : (
-            <Redirect to="/pin" />
-          )}
-          <Redirect from="*" to="/404" />
+          {!context.user && <Redirect to="/pin" />}
+          <Route path="/" exact>
+            <views.UserDashboardView />
+          </Route>
+          <Route path="/poll">
+            {context?.user?.hasCompletedPoll ? (
+              <views.PollView.Thanks />
+            ) : (
+              <views.PollView.Poll />
+            )}
+          </Route>
+          <Route path="/faq">
+            <views.FaqView />
+          </Route>
+          <Route path="/video">
+            <views.VideoView />
+          </Route>
+          <Route path="/guest-list">
+            <views.GuestsListView />
+          </Route>
+          <Route path="/accompaniment">
+            <views.AccompanimentView />
+          </Route>
+          <Route path="*">
+            <views.NotFoundView />
+          </Route>
         </Switch>
-        <Footer />
       </Router>
+      <Footer />
       <ToastContainer
         position="bottom-end"
         className="m-3"
         style={{ zIndex: 1031 }}
       >
-        {notifications.map(({ title, children }) => (
-          <Toast title={title}>{children}</Toast>
+        {notifications.map(({ title, children }, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <Toast key={`${title}${index}`} title={title}>
+            {children}
+          </Toast>
         ))}
       </ToastContainer>
     </UserContext.Provider>

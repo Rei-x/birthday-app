@@ -26,21 +26,9 @@
     "emitDecoratorMetadata": true,
     /* Advanced Options */
     "forceConsistentCasingInFileNames": true,
-    "types": [
-      "jest",
-      "node"
-    ],
-    "typeRoots": [
-      "src/types/**",
-      "./node_modules/@types"
-    ]
+    "types": ["jest", "node"],
+    "typeRoots": ["src/types/**", "./node_modules/@types"]
   },
-  "include": [
-    "src/**/*",
-    "tests/**/*",
-    "jest.config.js",
-  ],
-  "exclude": [
-    "build/**/*"
-  ]
+  "include": ["src/**/*", "tests/**/*", "jest.config.js"],
+  "exclude": ["build/**/*"]
 }

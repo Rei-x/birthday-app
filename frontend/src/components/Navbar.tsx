@@ -11,12 +11,10 @@ const Navigation = () => {
   const logout = () => {
     if (setContext) {
       setContext((oldContext) => ({
-        ...oldContext,
-        JWT: undefined,
-        user: undefined,
+        addNotification: oldContext.addNotification,
       }));
     }
-    localStorage.removeItem('JWT');
+    localStorage.clear();
   };
 
   return (
@@ -46,6 +44,9 @@ const Navigation = () => {
                 </LinkContainer>
                 <LinkContainer to="/faq">
                   <Nav.Link>FAQ</Nav.Link>
+                </LinkContainer>
+                <LinkContainer to="/guest-list">
+                  <Nav.Link>Lista gości</Nav.Link>
                 </LinkContainer>
               </>
             )}

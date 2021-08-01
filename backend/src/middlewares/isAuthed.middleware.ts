@@ -18,37 +18,52 @@ const onlyAdminFieldsAreInRequest = (req: Request): boolean => {
 };
 
 // eslint-disable-next-line max-len
-const userRequestsHisUserId = (req: Request, res: Response): boolean => req.params.userId === res.locals.user.id;
+const userRequestsHisUserId = (req: Request, res: Response): boolean =>
+  req.params.userId === res.locals.user.id;
 
-const userHasPermission = (req: Request, res: Response, requiredRole: 'admin' | 'user'): boolean => {
+const isUserIdInRequestParams = (req: Request): boolean =>
+  req.params.userId !== undefined;
+
+const userHasPermission = (
+  req: Request,
+  res: Response,
+  requiredRole: 'admin' | 'user'
+): boolean => {
   if (res.locals.user.role === 'admin') return true;
   if (res.locals.user.role === 'user' && requiredRole === 'admin') return false;
   if (onlyAdminFieldsAreInRequest(req)) return false;
   if (userRequestsHisUserId(req, res)) return true;
+  if (requiredRole === 'user' && !isUserIdInRequestParams(req)) return true;
   return false;
 };
 
-const validateToken = (requiredRole: 'admin' | 'user' = 'user') => (req: Request, res: Response, next: NextFunction) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  if (!token) {
-    res.sendStatus(401);
-    return;
-  }
-
-  jwt.verify(token, config.SECRET, (_err, decoded: JWTInterface | undefined) => {
-    if (!decoded) {
+const validateToken =
+  (requiredRole: 'admin' | 'user' = 'user') =>
+  (req: Request, res: Response, next: NextFunction) => {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) {
       res.sendStatus(401);
       return;
     }
 
-    res.locals.user = decoded;
+    jwt.verify(
+      token,
+      config.SECRET,
+      (_err, decoded: Partial<JWTInterface> | undefined) => {
+        if (!decoded) {
+          res.sendStatus(401);
+          return;
+        }
 
-    if (userHasPermission(req, res, requiredRole)) {
-      next();
-    } else {
-      res.sendStatus(403);
-    }
-  });
-};
+        res.locals.user = decoded;
+
+        if (userHasPermission(req, res, requiredRole)) {
+          next();
+        } else {
+          res.sendStatus(403);
+        }
+      }
+    );
+  };
 
 export default validateToken;

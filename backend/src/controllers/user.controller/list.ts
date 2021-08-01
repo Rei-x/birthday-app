@@ -5,10 +5,25 @@ import { UserModel } from '../../models';
 const list = async (req: Request, res: Response) => {
   const { page } = req.query;
 
+  const { role } = res.locals.user;
+
   const offset = getOffsetFromPage(<string>page || 1);
 
+  const userOptions = {
+    select: 'username firstName lastName hasConfirmedAttendance -_id',
+  };
+  const adminOptions = {};
+  const additionalOptions = role === 'admin' ? adminOptions : userOptions;
+
   try {
-    const users = await UserModel.paginate({}, { ...paginationOptions, offset });
+    const users = await UserModel.paginate(
+      {},
+      {
+        ...paginationOptions,
+        offset,
+        ...additionalOptions,
+      }
+    );
     res.json(users);
   } catch (e) {
     res.sendStatus(500);

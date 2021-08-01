@@ -22,9 +22,11 @@ const swaggerOptions: swaggerJSDoc.Options = {
         },
       },
     },
-    security: [{
-      bearerAuth: [],
-    }],
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
     host: 'http://localhost:3000',
     servers: [{ url: 'http://localhost:3000/api' }],
     basePath: '/api',

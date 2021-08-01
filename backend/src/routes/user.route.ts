@@ -5,25 +5,32 @@ import mkdirp from 'mkdirp';
 import randomstring from 'randomstring';
 import { userController } from '../controllers';
 import { isAuthed } from '../middlewares';
+import config from '../config';
 
 const router = Router();
 
-const uploadPath = 'uploads/';
-
-mkdirp.sync(uploadPath);
+mkdirp.sync(config.UPLOAD_PATH);
 
 const storage = multer.diskStorage({
   destination: (_req, _file, cb) => {
-    cb(null, uploadPath);
+    cb(null, config.UPLOAD_PATH);
   },
   filename: (_req, file, cb) => {
-    cb(null, `${randomstring.generate()}.${Date.now()}${path.extname(file.originalname)}`);
+    cb(
+      null,
+      `${randomstring.generate()}.${Date.now()}${path.extname(
+        file.originalname
+      )}`
+    );
   },
 });
 
-const uploadSettings = multer({ storage }).fields([{ name: 'avatar', maxCount: 1 }, { name: 'video', maxCount: 1 }]);
+const uploadSettings = multer({ storage }).fields([
+  { name: 'avatar', maxCount: 1 },
+  { name: 'video', maxCount: 1 },
+]);
 
-router.get('/user', isAuthed('admin'), userController.list);
+router.get('/user', isAuthed(), userController.list);
 router.get('/user/:userId', isAuthed(), userController.one);
 router.post('/user', isAuthed('admin'), uploadSettings, userController.post);
 router.patch('/user/:userId', isAuthed(), uploadSettings, userController.patch);

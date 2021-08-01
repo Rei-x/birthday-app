@@ -4,15 +4,18 @@ import UsersTable from './admin/UsersTable';
 import Modal from './Modal';
 import Toast from './Toast';
 import NotFoundMessage from './NotFound';
-import PollQuestion from './PollQuestion';
 import Avatar from './Avatar';
 import Widget from './userDashboard/Widget';
-import Weather from './userDashboard/Weather';
-import TimeRemaining from './userDashboard/TimeRemaining';
-import VodkaPoll from './userDashboard/VodkaPoll';
-import Accompaniment from './userDashboard/Accompaniment';
-import Shortcuts from './userDashboard/Shortcuts';
+import WeatherWidget from './userDashboard/Weather';
+import TimeRemainingWidget from './userDashboard/TimeRemaining';
+import VodkaPollWidget from './userDashboard/VodkaPoll';
+import AccompanimentWidget from './userDashboard/Accompaniment';
+import ShortcutsWidget from './userDashboard/Shortcuts';
+import AttendanceWidget from './userDashboard/Attendance';
+import PollWidget from './userDashboard/Poll';
+import VideoWidget from './userDashboard/Video';
 import Footer from './Footer';
+import Loading from './Loading';
 
 export {
   Navbar,
@@ -21,13 +24,16 @@ export {
   Modal,
   NotFoundMessage,
   Toast,
-  PollQuestion,
   Avatar,
   Widget,
-  Weather,
-  TimeRemaining,
-  VodkaPoll,
-  Accompaniment,
-  Shortcuts,
+  WeatherWidget,
+  TimeRemainingWidget,
+  VodkaPollWidget,
+  AccompanimentWidget,
+  ShortcutsWidget,
+  AttendanceWidget,
+  PollWidget,
+  VideoWidget,
   Footer,
+  Loading,
 };

@@ -2,7 +2,8 @@ import request from 'supertest';
 import app from '../src/app';
 import { TokenModel, UserInterface } from '../src/models';
 import { closeConnectionToDatabase } from '../src/db';
-import { connectToMemoryDatabase, createTestUser, getUserJWT } from './utils';
+import { connectToMemoryDatabase, createTestUser } from './utils';
+import { generateJWT } from '../src/utils';
 import 'jest-extended';
 
 describe('Token', () => {
@@ -12,7 +13,7 @@ describe('Token', () => {
   beforeAll(async () => {
     await connectToMemoryDatabase();
     adminUser = await createTestUser({ username: 'adminUser', role: 'admin' });
-    adminJWTToken = await getUserJWT(adminUser);
+    adminJWTToken = await generateJWT(adminUser);
   });
 
   test('Creating token', async () => {
@@ -46,7 +47,7 @@ describe('Token', () => {
 
   test('Returns 403 with normal user JWT', async () => {
     const normalUser = await createTestUser();
-    const normalUserJWTToken = await getUserJWT(normalUser);
+    const normalUserJWTToken = await generateJWT(normalUser);
 
     const response = await request(app)
       .post('/api/redeemToken')
@@ -62,7 +63,9 @@ describe('Token', () => {
 
     expect(tokenData).not.toBeNull();
 
-    const response = await request(app).get(`/api/redeemToken/${tokenData!.token}`);
+    const response = await request(app).get(
+      `/api/redeemToken/${tokenData!.token}`
+    );
 
     expect(response.status).toBe(200);
     expect(response.body.pin).toBeWithin(100000, 999999);

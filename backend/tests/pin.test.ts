@@ -17,7 +17,9 @@ describe('Pin', () => {
     const pinNumber = 603043;
     await PinModel.create({ pin: pinNumber, user: user._id });
 
-    const response = await request(app).post('/api/pin').send({ pin: pinNumber });
+    const response = await request(app)
+      .post('/api/pin')
+      .send({ pin: pinNumber });
     expect(response.status).toBe(200);
     expect(response.body.JWT).toBeString();
   });

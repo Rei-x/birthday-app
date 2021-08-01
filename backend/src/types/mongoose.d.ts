@@ -129,7 +129,7 @@ declare module 'mongoose' {
     paginate(
       query?: FilterQuery<T>,
       options?: PaginateOptions,
-      callback?: (err: any, result: PaginateResult<T>) => void,
+      callback?: (err: any, result: PaginateResult<T>) => void
     ): Promise<PaginateResult<T>>;
   }
 
@@ -137,7 +137,7 @@ declare module 'mongoose' {
     name: string,
     schema?: Schema<any>,
     collection?: string,
-    skipInit?: boolean,
+    skipInit?: boolean
   ): PaginateModel<T>;
 }
 // eslint-disable-next-line @typescript-eslint/naming-convention

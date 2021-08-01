@@ -9,7 +9,7 @@ const Weather = () => (
     </div>
     <div className="d-flex">
       <img src="https://openweathermap.org/img/w/01d.png" alt="weather icon" />
-      <p className="weather__temperature">17°C</p>
+      <p className="weather__temperature">23°C</p>
     </div>
   </Widget>
 );

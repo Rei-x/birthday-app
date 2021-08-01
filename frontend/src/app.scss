@@ -11,31 +11,13 @@ $violet: #6a70eb;
   --animate-duration: 0.8s;
 }
 
+.form-check-input,
+.form-check-label {
+  cursor: pointer;
+}
+
 .navbar-margin {
   margin-top: 6rem;
-}
-
-@keyframes fadeInLeft {
-  from {
-    opacity: 0;
-    transform: translate3d(-100%, 0, 0);
-  }
-
-  to {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-  }
-}
-
-@keyframes fadeOutRight {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-    transform: translate3d(100%, 0, 0);
-  }
 }
 
 .poll-question-enter {
@@ -136,11 +118,13 @@ $violet: #6a70eb;
 }
 
 .shortcuts {
+  &__wrapper {
+    width: 100%;
+  }
   &__list {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 100%;
+    justify-content: center;
   }
   &__item {
     font-family: inherit;
@@ -151,7 +135,7 @@ $violet: #6a70eb;
     border-radius: 4px;
     text-align: center;
     vertical-align: middle;
-    width: 30%;
+    width: 90px;
     height: 70px;
     line-height: 50px;
     border: none;
@@ -168,4 +152,64 @@ $violet: #6a70eb;
       line-height: 1.5rem;
     }
   }
+}
+
+.guest-list {
+  &__wrapper {
+    max-width: 40rem;
+  }
+  &__name {
+    font-size: 1rem;
+    margin: 0;
+  }
+  &__item {
+    margin: 1rem;
+  }
+}
+
+.badge {
+  height: 20px;
+}
+
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 1s;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 1s;
+}
+#sq_112
+  > div:nth-child(2)
+  > fieldset
+  > div:nth-child(5)
+  > label
+  > span:nth-child(3)
+  > span {
+  line-height: 20px;
+}
+
+#sq_112 > div:nth-child(2) > fieldset > div:nth-child(5) {
+  margin-bottom: 10px;
+}
+
+#root
+  > div.vertical-center.justify-content-center.container
+  > div
+  > div
+  > div
+  > form
+  > div.sv_container
+  > div
+  > h3 {
+  text-align: center;
 }

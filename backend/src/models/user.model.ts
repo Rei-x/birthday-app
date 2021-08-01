@@ -11,8 +11,8 @@ interface UserInterface extends Document<UserInterface> {
   avatar: string;
   video?: string;
   hasCompletedPoll: boolean;
-  hasCompletedVodkaPoll: boolean;
-  hasConfirmedAttendance: boolean;
+  vodkaPollChoice: string;
+  hasConfirmedAttendance: 'yes' | 'idk' | 'no';
 }
 
 const schema = new Schema({
@@ -44,13 +44,14 @@ const schema = new Schema({
     type: Boolean,
     default: false,
   },
-  hasCompletedVodkaPoll: {
-    type: Boolean,
-    default: false,
+  vodkaPollChoice: {
+    type: String,
+    default: 'idk',
   },
   hasConfirmedAttendance: {
-    type: Boolean,
-    default: false,
+    type: String,
+    default: 'idk',
+    enum: ['yes', 'idk', 'no'],
   },
 });
 

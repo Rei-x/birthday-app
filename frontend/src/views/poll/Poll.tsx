@@ -11,9 +11,9 @@ const Poll = () => {
 
   Survey.StylesManager.applyTheme('bootstrap');
   const surveyJSON = {
-    surveyId: '6d935703-26a5-4636-8a3e-e3fce68c5359',
+    surveyId: '42e2fcc0-ab20-45a0-9f89-a65bf52b4887',
   };
-  const surveyPostId = '4b1fab98-8ff1-40c4-ab68-4476919e6901';
+  const surveyPostId = '85709f18-fc85-4033-8a40-c8464baec18b';
 
   const survey = new Survey.Model(surveyJSON);
 

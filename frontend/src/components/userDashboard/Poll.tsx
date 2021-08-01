@@ -6,7 +6,7 @@ import Widget from './Widget';
 const Poll = () => (
   <Widget>
     <div className="d-flex flex-column justify-content-center">
-      <h5>WAŻNE: wypełnij ankietę</h5>
+      <h5>❗ WAŻNE ❗ -&gt; wypełnij ankietę</h5>
     </div>
     <div className="d-flex flex-column justify-content-center">
       <LinkContainer to="/poll">

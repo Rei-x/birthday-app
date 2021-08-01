@@ -101,30 +101,32 @@ const App = () => {
           <Route path="/404">
             <views.NotFoundView />
           </Route>
-          {context.user ? (
-            <>
-              <Route path="/" exact>
-                <views.UserDashboardView />
-              </Route>
-              {!context.user.hasCompletedPoll && (
-                <Route path="/poll">
-                  <views.PollView />
-                </Route>
-              )}
-              <Route path="/faq">
-                <views.FaqView />
-              </Route>
-              <Route path="/video">
-                <views.VideoView />
-              </Route>
-            </>
-          ) : (
-            <Redirect to="/pin" />
-          )}
-          <Redirect from="*" to="/404" />
+          {!context.user && <Redirect to="/pin" />}
+          <Route path="/" exact>
+            <views.UserDashboardView />
+          </Route>
+          <Route path="/poll">
+            {context?.user?.hasCompletedPoll ? (
+              <views.PollView.Thanks />
+            ) : (
+              <views.PollView.Poll />
+            )}
+          </Route>
+          <Route path="/faq">
+            <views.FaqView />
+          </Route>
+          <Route path="/video">
+            <views.VideoView />
+          </Route>
+          <Route path="/guest-list">
+            <views.GuestsListView />
+          </Route>
+          <Route path="*">
+            <views.NotFoundView />
+          </Route>
         </Switch>
-        <Footer />
       </Router>
+      <Footer />
       <ToastContainer
         position="bottom-end"
         className="m-3"

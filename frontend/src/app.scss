@@ -171,3 +171,28 @@ $violet: #6a70eb;
   opacity: 0;
   transition: opacity 1s;
 }
+#sq_112
+  > div:nth-child(2)
+  > fieldset
+  > div:nth-child(5)
+  > label
+  > span:nth-child(3)
+  > span {
+  line-height: 20px;
+}
+
+#sq_112 > div:nth-child(2) > fieldset > div:nth-child(5) {
+  margin-bottom: 10px;
+}
+
+#root
+  > div.vertical-center.justify-content-center.container
+  > div
+  > div
+  > div
+  > form
+  > div.sv_container
+  > div
+  > h3 {
+  text-align: center;
+}

@@ -2,10 +2,11 @@ import ky from 'ky';
 import jwt_decode from 'jwt-decode';
 import {
   JWTInterface,
-  PaginatedUsers,
+  AdminPaginatedUsers,
   PinInterface,
   UserInterface,
   RedeemTokenInterface,
+  UserPaginatedUsers,
 } from '../interfaces';
 import { BASE_URL } from '../config';
 
@@ -52,8 +53,8 @@ class Api {
     return this.client.get(`api/user/${this.user._id}`).json<UserInterface>();
   }
 
-  async getUsers(): Promise<PaginatedUsers> {
-    return this.client.get('api/user').json<PaginatedUsers>();
+  async getUsers(): Promise<AdminPaginatedUsers|UserPaginatedUsers> {
+    return this.client.get('api/user').json<AdminPaginatedUsers|UserPaginatedUsers>();
   }
 
   async getInviteLink(userId: string): Promise<string> {

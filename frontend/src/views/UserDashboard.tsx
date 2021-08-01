@@ -34,7 +34,7 @@ const UserDashboard = () => {
       )}
       <WeatherWidget />
       <TimeRemainingWidget />
-      {!user.hasCompletedVodkaPoll && <VodkaPollWidget />}
+      {user.vodkaPollChoice === 'idk' && <VodkaPollWidget />}
       <AccompanimentWidget />
       <ShortcutsWidget />
     </Container>

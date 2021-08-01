@@ -3,10 +3,11 @@ import TokenView from './authorization/Token';
 import AdminView from './admin/Admin';
 import NotFoundView from './404';
 import PinView from './authorization/Pin';
-import PollView from './Poll';
+import PollView from './poll';
 import UserDashboardView from './UserDashboard';
 import FaqView from './Faq';
 import VideoView from './Video';
+import GuestsListView from './GuestsList';
 
 export {
   MainView,
@@ -17,5 +18,6 @@ export {
   PollView,
   UserDashboardView,
   FaqView,
-  VideoView
+  VideoView,
+  GuestsListView
 };

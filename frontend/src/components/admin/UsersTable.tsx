@@ -93,7 +93,13 @@ const UsersTable = ({ users, update }: TableProps) => {
               <td>{user.firstName}</td>
               <td>{user.lastName}</td>
               <td>{user.avatar}</td>
-              <td><Form.Check type="checkbox" disabled checked={user.hasConfirmedAttendance}/></td>
+              <td>
+                <Form.Check
+                  type="checkbox"
+                  disabled
+                  checked={user.hasConfirmedAttendance === 'yes'}
+                />
+              </td>
               <td>
                 {user.video ? (
                   <a

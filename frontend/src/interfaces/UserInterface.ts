@@ -7,6 +7,6 @@ export interface UserInterface {
   avatar: string;
   video?: string;
   hasCompletedPoll: boolean;
-  hasCompletedVodkaPoll: boolean;
-  hasConfirmedAttendance: boolean;
+  vodkaPollChoice: string;
+  hasConfirmedAttendance: 'yes' | 'idk' | 'no';
 }

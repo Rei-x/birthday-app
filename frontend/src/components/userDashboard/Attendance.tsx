@@ -7,14 +7,14 @@ import { useApi } from '../../hooks';
 const Attendance = () => {
   const [context, setContext] = useContext(UserContext);
   const [attendance, setAttendance] = useState(
-    context?.user?.hasConfirmedAttendance || false
+    context?.user?.hasConfirmedAttendance || 'idk'
   );
   const api = useApi();
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = async (
     e
   ) => {
-    const answer = e.target.value === 'yes';
+    const answer = e.target.value as 'yes' | 'no';
     setAttendance(answer);
 
     const formData = new FormData();
@@ -55,7 +55,7 @@ const Attendance = () => {
           name="attendancexd"
           type="radio"
           value="yes"
-          checked={attendance}
+          checked={attendance === 'yes'}
           onChange={handleChange}
         />
         <Form.Check

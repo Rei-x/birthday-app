@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Container, Row } from 'react-bootstrap';
 import { useApi } from '../../hooks';
-import { UserInterface } from '../../interfaces';
+import { AdminPaginatedUsers, UserInterface } from '../../interfaces';
 import { CreateUserForm, UsersTable } from '../../components';
 
 const Dashboard = () => {
@@ -10,7 +10,7 @@ const Dashboard = () => {
 
   const getUserTable = useCallback(async () => {
     const fetchedUsers = await api?.getUsers();
-    setUsers(fetchedUsers?.docs);
+    setUsers(fetchedUsers?.docs as AdminPaginatedUsers['docs']);
   }, [api]);
 
   useEffect(() => {

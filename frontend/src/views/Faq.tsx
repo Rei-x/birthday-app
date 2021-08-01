@@ -63,7 +63,7 @@ const Faq = () => {
     ],
     [
       'Kiedy to jest? O której się kończy?',
-      'Impreza zaczyna się o 18:00 dnia 27.08.2021, maksymalnie możecie zostać do 16:00 dnia następnego.',
+      'Impreza zaczyna się o 18:00 dnia 28.08.2021, maksymalnie możecie zostać do 12:00 dnia następnego.',
     ],
     [
       'Czy można nocować?',

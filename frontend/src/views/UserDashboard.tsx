@@ -29,12 +29,10 @@ const UserDashboard = () => {
         </h2>
       </div>
       <AttendanceWidget />
-      {!user.hasCompletedPoll && (
-        <PollWidget />
-      )}
+      {!user.hasCompletedPoll && <PollWidget />}
       <WeatherWidget />
       <TimeRemainingWidget />
-      {user.vodkaPollChoice === 'idk' && <VodkaPollWidget />}
+      <VodkaPollWidget />
       <AccompanimentWidget />
       <ShortcutsWidget />
     </Container>

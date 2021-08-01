@@ -7,7 +7,8 @@ import PollView from './poll';
 import UserDashboardView from './UserDashboard';
 import FaqView from './Faq';
 import VideoView from './Video';
-import GuestsListView from './GuestsList';
+import GuestsListView from './GuestList';
+import AccompanimentView from './Accompaniment';
 
 export {
   MainView,
@@ -19,5 +20,6 @@ export {
   UserDashboardView,
   FaqView,
   VideoView,
-  GuestsListView
+  GuestsListView,
+  AccompanimentView,
 };

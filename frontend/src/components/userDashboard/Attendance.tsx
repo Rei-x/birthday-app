@@ -63,7 +63,7 @@ const Attendance = () => {
           name="attendancexd"
           type="radio"
           value="no"
-          checked={!attendance}
+          checked={attendance === 'no'}
           onChange={handleChange}
         />
       </Form>

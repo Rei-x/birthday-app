@@ -16,6 +16,7 @@ import { UserContext } from '../../contexts';
 import { useApi } from '../../hooks';
 import { UserInterface } from '../../interfaces';
 import { getUrl } from '../../utils';
+import Avatar from '../Avatar';
 
 interface TableProps {
   users: Array<UserInterface>;
@@ -92,7 +93,9 @@ const UsersTable = ({ users, update }: TableProps) => {
               <td>{user.username}</td>
               <td>{user.firstName}</td>
               <td>{user.lastName}</td>
-              <td>{user.avatar}</td>
+              <td>
+                <Avatar url={api?.getAvatarUrl(user.username) || ''} />
+              </td>
               <td>
                 <Form.Check
                   type="checkbox"

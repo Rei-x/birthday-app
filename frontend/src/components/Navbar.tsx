@@ -45,6 +45,9 @@ const Navigation = () => {
                 <LinkContainer to="/faq">
                   <Nav.Link>FAQ</Nav.Link>
                 </LinkContainer>
+                <LinkContainer to="/guest-list">
+                  <Nav.Link>Lista gości</Nav.Link>
+                </LinkContainer>
               </>
             )}
           </Nav>

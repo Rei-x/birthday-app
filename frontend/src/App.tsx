@@ -121,6 +121,9 @@ const App = () => {
           <Route path="/guest-list">
             <views.GuestsListView />
           </Route>
+          <Route path="/accompaniment">
+            <views.AccompanimentView />
+          </Route>
           <Route path="*">
             <views.NotFoundView />
           </Route>
@@ -132,8 +135,11 @@ const App = () => {
         className="m-3"
         style={{ zIndex: 1031 }}
       >
-        {notifications.map(({ title, children }) => (
-          <Toast title={title}>{children}</Toast>
+        {notifications.map(({ title, children }, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <Toast key={`${title}${index}`} title={title}>
+            {children}
+          </Toast>
         ))}
       </ToastContainer>
     </UserContext.Provider>

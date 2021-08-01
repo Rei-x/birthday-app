@@ -8,7 +8,11 @@ const createUserValidator: ValidationChain[] = [
   body('username').isString().isLength({ min: 3 }).optional(),
   body('firstName').isString().isLength({ min: 3 }).optional(),
   body('lastName').isString().isLength({ min: 3 }).optional(),
-  body('hasConfirmedAttendance').isString().isLength({ min: 3 }).optional(),
+  body('vodkaPollChoice').isString().isLength({ min: 3 }).optional(),
+  body('hasConfirmedAttendance')
+    .isIn(['yes', 'idk', 'no'])
+    .withMessage('hasConfirmedAttendance must be yes, idk or no')
+    .optional(),
 ];
 
 const deleteUndefinedValuesFromObject = (obj: Record<string, any>) => {
@@ -30,6 +34,7 @@ const patch = createRequestHandler(
       lastName,
       hasConfirmedAttendance,
       hasCompletedPoll,
+      vodkaPollChoice,
     } = req.body;
     const { avatar, video } = req.files as unknown as {
       [fieldname: string]: Express.Multer.File[];
@@ -46,6 +51,7 @@ const patch = createRequestHandler(
       lastName,
       hasConfirmedAttendance,
       hasCompletedPoll,
+      vodkaPollChoice,
       avatar: avatarFilePath,
       video: videoFilePath,
     };

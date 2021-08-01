@@ -9,7 +9,7 @@ const one = createRequestHandler(
 
     const user = await UserModel.findById(
       userId,
-      'role username firstName lastName hasCompletedPoll hasCompletedVodkaPoll hasConfirmedAttendance'
+      'role username firstName lastName hasCompletedPoll vodkaPollChoice hasConfirmedAttendance'
     );
 
     if (!user) {

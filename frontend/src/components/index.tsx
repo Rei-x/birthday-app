@@ -13,6 +13,7 @@ import AccompanimentWidget from './userDashboard/Accompaniment';
 import ShortcutsWidget from './userDashboard/Shortcuts';
 import AttendanceWidget from './userDashboard/Attendance';
 import PollWidget from './userDashboard/Poll';
+import VideoWidget from './userDashboard/Video';
 import Footer from './Footer';
 import Loading from './Loading';
 
@@ -32,6 +33,7 @@ export {
   ShortcutsWidget,
   AttendanceWidget,
   PollWidget,
+  VideoWidget,
   Footer,
   Loading,
 };

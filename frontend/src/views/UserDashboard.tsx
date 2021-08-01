@@ -10,6 +10,7 @@ import {
   Loading,
   AttendanceWidget,
   PollWidget,
+  VideoWidget,
 } from '../components';
 import { UserContext } from '../contexts';
 import { UserInterface } from '../interfaces';
@@ -19,6 +20,7 @@ const UserDashboard = () => {
   const [context] = useContext(UserContext);
   const api = useApi();
   const user = context.user as UserInterface;
+  const hasWatchedVideo = localStorage.getItem('hasWatchedVideo');
 
   return api ? (
     <Container className="navbar-margin">
@@ -28,6 +30,7 @@ const UserDashboard = () => {
           Hej <b>{user?.firstName}!</b>
         </h2>
       </div>
+      {!hasWatchedVideo && <VideoWidget />}
       <AttendanceWidget />
       {!user.hasCompletedPoll && <PollWidget />}
       <WeatherWidget />

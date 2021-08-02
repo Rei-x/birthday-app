@@ -1,5 +1,5 @@
 const PaginationOptions = {
-  limit: 10,
+  limit: 30,
   collation: {
     locale: 'en',
   },

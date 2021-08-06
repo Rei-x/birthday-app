@@ -4,6 +4,7 @@ import videoController from './video.controller';
 import adminController from './admin.controller';
 import pinController from './pin.controller';
 import avatarController from './avatar.controller';
+import vodkaController from './vodka.controller';
 
 export {
   userController,
@@ -12,4 +13,5 @@ export {
   adminController,
   pinController,
   avatarController,
+  vodkaController
 };

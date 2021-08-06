@@ -1,8 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { Form, Button, Spinner } from 'react-bootstrap';
-import { UserContext } from '../../contexts';
-import { useApi } from '../../hooks';
-import Widget from './Widget';
+import { UserContext } from '../../../contexts';
+import { useApi } from '../../../hooks';
+import Widget from '../Widget';
+import VodkaChart from './Chart';
 
 const VodkaPoll = () => {
   const [context, setContext] = useContext(UserContext);
@@ -46,7 +47,10 @@ const VodkaPoll = () => {
   return (
     <Widget>
       {context.user?.vodkaPollChoice !== 'idk' ? (
-        <h5>Wybrałeś(aś) ⭐{context.user?.vodkaPollChoice}⭐</h5>
+        <div>
+          <h5>Jaka wóda wariacie</h5>
+          <VodkaChart />
+        </div>
       ) : (
         <div className="vodka__wrapper">
           <h5>Najlepsza wóda to {choice}</h5>

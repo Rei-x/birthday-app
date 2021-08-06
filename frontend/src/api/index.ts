@@ -53,8 +53,10 @@ class Api {
     return this.client.get(`api/user/${this.user._id}`).json<UserInterface>();
   }
 
-  async getUsers(): Promise<AdminPaginatedUsers|UserPaginatedUsers> {
-    return this.client.get('api/user').json<AdminPaginatedUsers|UserPaginatedUsers>();
+  async getUsers(): Promise<AdminPaginatedUsers | UserPaginatedUsers> {
+    return this.client
+      .get('api/user')
+      .json<AdminPaginatedUsers | UserPaginatedUsers>();
   }
 
   async getInviteLink(userId: string): Promise<string> {
@@ -96,6 +98,7 @@ class Api {
     try {
       await this.client.patch(`api/user/${userId || this.user._id}`, {
         body: formData,
+        timeout: 2147483647,
       });
       return true;
     } catch (e) {

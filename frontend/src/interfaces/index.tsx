@@ -5,3 +5,4 @@ export * from './BadResponse';
 export * from './Notification';
 export * from './Pin';
 export * from './RedeemToken';
+export * from './VodkaData';

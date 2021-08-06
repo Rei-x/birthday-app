@@ -7,6 +7,7 @@ import {
   UserInterface,
   RedeemTokenInterface,
   UserPaginatedUsers,
+  VodkaData,
 } from '../interfaces';
 import { BASE_URL } from '../config';
 
@@ -131,6 +132,10 @@ class Api {
     } catch (e) {
       return false;
     }
+  }
+
+  async getVodkaPoll() {
+    return this.client.get('api/vodka-poll').json<VodkaData>();
   }
 }
 

@@ -6,8 +6,17 @@ import videoRoute from './video.route';
 import adminRoute from './admin.route';
 import pinRoute from './pin.route';
 import avatarRoute from './avatar.route';
+import vodkaRoute from './vodka.route';
 
 export default {
   docs: docsRoute,
-  api: [userRoute, tokenRoute, videoRoute, adminRoute, pinRoute, avatarRoute],
+  api: [
+    userRoute,
+    tokenRoute,
+    videoRoute,
+    adminRoute,
+    pinRoute,
+    avatarRoute,
+    vodkaRoute,
+  ],
 };

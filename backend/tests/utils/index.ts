@@ -2,7 +2,7 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import bcrypt from 'bcryptjs';
 import { connectToDatabase } from '../../src/db';
-import { UserModel } from '../../src/models';
+import { UserInterface, UserModel } from '../../src/models';
 
 export const connectToMemoryDatabase = async () => {
   const mongod = new MongoMemoryServer();
@@ -11,16 +11,7 @@ export const connectToMemoryDatabase = async () => {
   await connectToDatabase(url);
 };
 
-interface TestUserInterface {
-  username?: string;
-  firstName?: string;
-  lastName?: string;
-  role?: 'user' | 'admin';
-  password?: string;
-  avatar?: string;
-}
-
-export const createTestUser = async (testUser?: TestUserInterface) => {
+export const createTestUser = async (testUser?: Partial<UserInterface & {password: string}>) => {
   let passwordHash;
   const password = testUser?.password;
 

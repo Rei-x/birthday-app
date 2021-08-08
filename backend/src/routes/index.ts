@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import userRoute from './user.route';
 import tokenRoute from './token.route';
 import docsRoute from './docs.route';
@@ -7,6 +6,7 @@ import adminRoute from './admin.route';
 import pinRoute from './pin.route';
 import avatarRoute from './avatar.route';
 import vodkaRoute from './vodka.route';
+import pollRoute from './poll.route';
 
 export default {
   docs: docsRoute,
@@ -18,5 +18,6 @@ export default {
     pinRoute,
     avatarRoute,
     vodkaRoute,
+    pollRoute,
   ],
 };

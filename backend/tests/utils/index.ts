@@ -1,8 +1,11 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import fetch, { Response } from 'node-fetch';
 import { connectToDatabase } from '../../src/db';
 import { UserInterface, UserModel } from '../../src/models';
+import config from '../../src/config';
 
 export const connectToMemoryDatabase = async () => {
   const mongod = new MongoMemoryServer();
@@ -11,7 +14,9 @@ export const connectToMemoryDatabase = async () => {
   await connectToDatabase(url);
 };
 
-export const createTestUser = async (testUser?: Partial<UserInterface & {password: string}>) => {
+export const createTestUser = async (
+  testUser?: Partial<UserInterface & { password: string }>
+) => {
   let passwordHash;
   const password = testUser?.password;
 
@@ -31,3 +36,28 @@ export const createTestUser = async (testUser?: Partial<UserInterface & {passwor
 
   return UserModel.create(userData);
 };
+
+export const generateJWTForTests = async (
+  role: 'admin' | 'user' = 'user',
+  userId?: string
+): Promise<string> =>
+  new Promise((resolve, reject) =>
+    jwt.sign(
+      {
+        id: userId,
+        role,
+      },
+      config.SECRET,
+      async (err: Error | null, encoded: string | undefined) => {
+        if (encoded) {
+          resolve(`Bearer ${encoded}`);
+        }
+        reject(err);
+      }
+    )
+  );
+
+export const mockFetch = (expectedResponse: any) =>
+  (fetch as jest.MockedFunction<typeof fetch>).mockResolvedValue({
+    json: async () => expectedResponse,
+  } as Response);

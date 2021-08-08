@@ -3,7 +3,7 @@ import TokenView from './authorization/Token';
 import AdminView from './admin/Admin';
 import NotFoundView from './404';
 import PinView from './authorization/Pin';
-import PollView from './poll';
+import PollView from './survey';
 import UserDashboardView from './UserDashboard';
 import FaqView from './Faq';
 import VideoView from './Video';

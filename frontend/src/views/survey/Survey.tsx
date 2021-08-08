@@ -5,7 +5,7 @@ import { UserContext } from '../../contexts';
 import Api from '../../api';
 import { useApi } from '../../hooks';
 
-const Poll = () => {
+const SurveyView = () => {
   const [context, setContext] = useContext(UserContext);
   const api = useApi();
 
@@ -65,4 +65,4 @@ const Poll = () => {
   );
 };
 
-export default Poll;
+export default SurveyView;

@@ -32,7 +32,7 @@ const UserDashboard = () => {
       </div>
       {!hasWatchedVideo && <VideoWidget />}
       <AttendanceWidget />
-      {!user.hasCompletedPoll && <PollWidget />}
+      {user.hasCompletedPoll ? <PollWidget.Result /> : <PollWidget.Survey />}
       <WeatherWidget />
       <TimeRemainingWidget />
       <VodkaPollWidget />

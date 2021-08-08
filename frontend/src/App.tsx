@@ -105,13 +105,18 @@ const App = () => {
           <Route path="/" exact>
             <views.UserDashboardView />
           </Route>
-          <Route path="/poll">
+          <Route path="/survey" exact>
             {context?.user?.hasCompletedPoll ? (
               <views.PollView.Thanks />
             ) : (
-              <views.PollView.Poll />
+              <views.PollView.Survey />
             )}
           </Route>
+          {context?.user?.hasCompletedPoll && (
+            <Route path="/survey/result">
+              <views.PollView.Result />
+            </Route>
+          )}
           <Route path="/faq">
             <views.FaqView />
           </Route>

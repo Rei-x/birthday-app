@@ -8,6 +8,7 @@ import {
   RedeemTokenInterface,
   UserPaginatedUsers,
   VodkaData,
+  SurveyResult,
 } from '../interfaces';
 import { BASE_URL } from '../config';
 
@@ -116,8 +117,16 @@ class Api {
     }
   }
 
-  async getPoll(): Promise<Record<any, any>> {
-    return this.client.get('api/poll').json<Record<any, any>>();
+  static async getSurvey(surveyId: string): Promise<any> {
+    return ky
+      .get(
+        `https://api.surveyjs.io/public/Survey/getSurvey?surveyId=${surveyId}`
+      )
+      .json<any>();
+  }
+
+  async getSurveyResult(userId?: string): Promise<SurveyResult> {
+    return this.client.get(`api/survey/result/${userId}`).json<SurveyResult>();
   }
 
   static async sendSurvey(PostId: string, survey: any) {

@@ -1,5 +1,5 @@
 import { PaginationInterface } from './Pagination';
-import { UserInterface } from './UserInterface';
+import { UserInterface } from './User';
 
 export interface AdminPaginatedUsers extends PaginationInterface {
   docs: UserInterface[]

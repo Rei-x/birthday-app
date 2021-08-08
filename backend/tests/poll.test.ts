@@ -43,16 +43,23 @@ describe('Poll', () => {
     const userJWT = await generateJWTForTests('user', userId);
 
     const valueToMock = {
-      ResultCount: 1,
+      ResultCount: 2,
       Data: [
         {
           user: userId,
           question1: 'yes',
         },
+        {
+          user: 'dog',
+          question1: 'no',
+        }
       ],
     };
 
-    const expectedResponse = valueToMock.Data[0];
+    const expectedResponse = {
+      ResultCount: 1,
+      Data: [valueToMock.Data[0]]
+    };
 
     mockFetch(valueToMock);
 

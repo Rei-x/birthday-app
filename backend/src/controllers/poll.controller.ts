@@ -21,9 +21,14 @@ const one = async (req: Request, res: Response) => {
     `?accessKey=${config.POLL_ACCESS_KEY}`;
   const pollResult = await (await fetch(url)).json();
 
-  const response = pollResult.Data.find(
+  const pollData = pollResult.Data.find(
     (answer: { user?: string }) => answer.user === userId
   );
+
+  const response = {
+    ResultCount: 1,
+    Data: [ pollData ]
+  }
 
   res.json(response);
 };

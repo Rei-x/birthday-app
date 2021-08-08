@@ -6,7 +6,7 @@ import adminRoute from './admin.route';
 import pinRoute from './pin.route';
 import avatarRoute from './avatar.route';
 import vodkaRoute from './vodka.route';
-import pollRoute from './poll.route';
+import surveyRoute from './survey.route';
 
 export default {
   docs: docsRoute,
@@ -18,6 +18,6 @@ export default {
     pinRoute,
     avatarRoute,
     vodkaRoute,
-    pollRoute,
+    surveyRoute,
   ],
 };

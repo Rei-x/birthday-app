@@ -5,7 +5,7 @@ import adminController from './admin.controller';
 import pinController from './pin.controller';
 import avatarController from './avatar.controller';
 import vodkaController from './vodka.controller';
-import pollController from './poll.controller';
+import surveyController from './survey.controller';
 
 export {
   userController,
@@ -15,5 +15,5 @@ export {
   pinController,
   avatarController,
   vodkaController,
-  pollController
+  surveyController
 };

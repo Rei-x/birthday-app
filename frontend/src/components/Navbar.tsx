@@ -51,9 +51,15 @@ const Navigation = () => {
               </>
             )}
           </Nav>
-          {context?.user && (
+          {context?.user ? (
             <Nav>
               <Nav.Link onClick={logout}>Logout</Nav.Link>
+            </Nav>
+          ) : (
+            <Nav>
+              <LinkContainer to="/pin">
+                <Nav.Link>Zaloguj się</Nav.Link>
+              </LinkContainer>
             </Nav>
           )}
         </Navbar.Collapse>

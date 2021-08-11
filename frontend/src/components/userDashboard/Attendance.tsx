@@ -47,7 +47,7 @@ const Attendance = () => {
     <Widget>
       <div>
         <h5>Będziesz?</h5>
-        <p className="text-muted">daj znać do 10.08.2021</p>
+        <p className="text-muted">daj znać do 14.08.2021</p>
       </div>
       <Form className="me-3">
         <Form.Check

@@ -34,7 +34,17 @@ const GuestsList = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       const fetchedUsers = await api?.getUsers();
-      if (fetchedUsers) setUsers(fetchedUsers.docs);
+      const sortedUsers = fetchedUsers?.docs.sort(
+        ({ hasConfirmedAttendance: a }, { hasConfirmedAttendance: b }) => {
+          if (a === b) return 0;
+          if (a === 'yes') return 1;
+          if (b === 'yes') return -1;
+          if (a === 'idk') return 1;
+          if (b === 'idk') return -1;
+          return 0;
+        }
+      );
+      if (fetchedUsers) setUsers(sortedUsers?.reverse());
       setLoading(false);
     };
     fetchUsers();

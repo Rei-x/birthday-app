@@ -31,7 +31,7 @@ describe('Poll', () => {
     mockFetch(expectedResponse);
 
     const response = await request(app)
-      .get('/api/poll/result')
+      .get('/api/survey/result')
       .set('Authorization', adminJWT);
 
     expect(response.status).toBe(200);
@@ -52,19 +52,19 @@ describe('Poll', () => {
         {
           user: 'dog',
           question1: 'no',
-        }
+        },
       ],
     };
 
     const expectedResponse = {
       ResultCount: 1,
-      Data: [valueToMock.Data[0]]
+      Data: [valueToMock.Data[0]],
     };
 
     mockFetch(valueToMock);
 
     const response = await request(app)
-      .get(`/api/poll/result/${userId}`)
+      .get(`/api/survey/result/${userId}`)
       .set('Authorization', userJWT);
 
     expect(response.status).toBe(200);

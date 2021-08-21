@@ -1,0 +1,28 @@
+tasks:
+  - name: Backend
+    init: |
+      cd backend
+      npm i
+    command: |
+      cd backend
+      npm run start
+  - name: Frontend
+    init: |
+      cd frontend
+      npm i
+    command: |
+      cd frontend
+      npm run start
+
+# List the ports to expose. Learn more https://www.gitpod.io/docs/config-ports/
+ports:
+  - port: 3000
+    onOpen: open-browser
+
+vscode:
+  extensions:
+    - coenraads.bracket-pair-colorizer-2
+    - dbaeumer.vscode-eslint
+    - esbenp.prettier-vscode
+    - vscode-icons-team.vscode-icons
+    - editorconfig.editorconfig

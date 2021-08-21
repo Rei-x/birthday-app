@@ -1,8 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Container, Row } from 'react-bootstrap';
+import {
+  CreateUserForm,
+  Loading,
+  SurveyResult,
+  UsersTable,
+} from '../../components';
 import { useApi } from '../../hooks';
 import { AdminPaginatedUsers, UserInterface } from '../../interfaces';
-import { CreateUserForm, UsersTable } from '../../components';
 
 const Dashboard = () => {
   const api = useApi();
@@ -25,9 +30,10 @@ const Dashboard = () => {
         {users ? (
           <UsersTable users={users} update={getUserTable} />
         ) : (
-          <h1>Loading...</h1>
+          <Loading />
         )}
       </Row>
+      <Row>{users ? <SurveyResult users={users} /> : <Loading />}</Row>
     </Container>
   );
 };

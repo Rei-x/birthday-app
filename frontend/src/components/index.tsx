@@ -1,26 +1,28 @@
-import Navbar from './Navbar';
 import CreateUserForm from './admin/CreateUserForm';
+import SurveyResult from './admin/SurveyResult';
 import UsersTable from './admin/UsersTable';
-import Modal from './Modal';
-import Toast from './Toast';
-import NotFoundMessage from './NotFound';
 import Avatar from './Avatar';
-import Widget from './userDashboard/Widget';
-import WeatherWidget from './userDashboard/Weather';
-import TimeRemainingWidget from './userDashboard/TimeRemaining';
-import VodkaPollWidget from './userDashboard/VodkaPoll';
-import AccompanimentWidget from './userDashboard/Accompaniment';
-import ShortcutsWidget from './userDashboard/Shortcuts';
-import AttendanceWidget from './userDashboard/Attendance';
-import PollWidget from './userDashboard/Poll';
-import VideoWidget from './userDashboard/Video';
 import Footer from './Footer';
 import Loading from './Loading';
+import Modal from './Modal';
+import Navbar from './Navbar';
+import NotFoundMessage from './NotFound';
+import Toast from './Toast';
+import AccompanimentWidget from './userDashboard/Accompaniment';
+import AttendanceWidget from './userDashboard/Attendance';
+import PollWidget from './userDashboard/Poll';
+import ShortcutsWidget from './userDashboard/Shortcuts';
+import TimeRemainingWidget from './userDashboard/TimeRemaining';
+import VideoWidget from './userDashboard/Video';
+import VodkaPollWidget from './userDashboard/VodkaPoll';
+import WeatherWidget from './userDashboard/Weather';
+import Widget from './userDashboard/Widget';
 
 export {
   Navbar,
   CreateUserForm,
   UsersTable,
+  SurveyResult,
   Modal,
   NotFoundMessage,
   Toast,

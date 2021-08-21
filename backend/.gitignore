@@ -4,4 +4,6 @@ node_modules
 uploads
 testUploads
 build
+static
+!static/defaultAvatar.jpg
 coverage

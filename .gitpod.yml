@@ -1,0 +1,21 @@
+
+tasks:
+  - init: npm ci # runs during prebuild
+    command: |
+      cd backend
+      npm run start
+      cd ../frontend
+      npm run start
+
+# List the ports to expose. Learn more https://www.gitpod.io/docs/config-ports/
+ports:
+  - port: 3000
+    onOpen: open-browser
+
+vscode:
+  extensions:
+    - coenraads.bracket-pair-colorizer-2
+    - dbaeumer.vscode-eslint
+    - esbenp.prettier-vscode
+    - vscode-icons-team.vscode-icons
+    - editorconfig.editorconfig

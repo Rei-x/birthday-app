@@ -129,6 +129,9 @@ const App = () => {
           <Route path="/accompaniment">
             <views.AccompanimentView />
           </Route>
+          <Route path="/music">
+            <views.SpotifyControllerView />
+          </Route>
           <Route path="*">
             <views.NotFoundView />
           </Route>

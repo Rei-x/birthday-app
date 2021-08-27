@@ -2,19 +2,20 @@ import React, { useContext } from 'react';
 import { Container } from 'react-bootstrap';
 import {
   AccompanimentWidget,
+  AttendanceWidget,
   Avatar,
+  Loading,
+  MapWidget,
+  PollWidget,
   ShortcutsWidget,
   TimeRemainingWidget,
+  VideoWidget,
   VodkaPollWidget,
   WeatherWidget,
-  Loading,
-  AttendanceWidget,
-  PollWidget,
-  VideoWidget,
 } from '../components';
 import { UserContext } from '../contexts';
-import { UserInterface } from '../interfaces';
 import { useApi } from '../hooks';
+import { UserInterface } from '../interfaces';
 
 const UserDashboard = () => {
   const [context] = useContext(UserContext);
@@ -30,6 +31,7 @@ const UserDashboard = () => {
           Hej <b>{user?.firstName}!</b>
         </h2>
       </div>
+      <MapWidget />
       {!hasWatchedVideo && <VideoWidget />}
       <AttendanceWidget />
       {user.hasCompletedPoll ? <PollWidget.Result /> : <PollWidget.Survey />}

@@ -16,6 +16,7 @@ import TimeRemainingWidget from './userDashboard/TimeRemaining';
 import VideoWidget from './userDashboard/Video';
 import VodkaPollWidget from './userDashboard/VodkaPoll';
 import WeatherWidget from './userDashboard/Weather';
+import MapWidget from './userDashboard/Map';
 import Widget from './userDashboard/Widget';
 
 export {
@@ -36,6 +37,7 @@ export {
   AttendanceWidget,
   PollWidget,
   VideoWidget,
+  MapWidget,
   Footer,
   Loading,
 };

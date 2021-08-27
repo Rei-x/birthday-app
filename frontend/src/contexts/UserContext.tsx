@@ -7,6 +7,6 @@ const UserContext = React.createContext<
       React.Dispatch<React.SetStateAction<GlobalContextInterface>>
     ]
   | [GlobalContextInterface, null]
->([{ addNotification: () => {} }, null]);
+>([{ addNotification: () => {}, party: false }, null]);
 
 export default UserContext;

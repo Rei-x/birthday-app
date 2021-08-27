@@ -3,6 +3,7 @@ import { Container, Row } from 'react-bootstrap';
 import {
   CreateUserForm,
   Loading,
+  MusicForm,
   SurveyResult,
   UsersTable,
 } from '../../components';
@@ -27,6 +28,7 @@ const Dashboard = () => {
       <Row className="vertical-center">
         <h1>Create user</h1>
         <CreateUserForm update={getUserTable} />
+        <MusicForm />
         {users ? (
           <UsersTable users={users} update={getUserTable} />
         ) : (

@@ -6,6 +6,7 @@ import {
   Avatar,
   Loading,
   MapWidget,
+  MusicWidget,
   PollWidget,
   ShortcutsWidget,
   TimeRemainingWidget,
@@ -31,6 +32,7 @@ const UserDashboard = () => {
           Hej <b>{user?.firstName}!</b>
         </h2>
       </div>
+      {context.party && <MusicWidget />}
       <MapWidget />
       {!hasWatchedVideo && <VideoWidget />}
       <AttendanceWidget />

@@ -11,7 +11,7 @@ import { generateJWT } from '../src/utils';
 describe('User', () => {
   let adminJWTToken: string;
   let userJWTToken: string;
-  let normalUser: UserInterface;
+  let user: UserInterface;
 
   beforeAll(async () => {
     await connectToMemoryDatabase();
@@ -20,15 +20,15 @@ describe('User', () => {
       role: 'admin',
     });
     adminJWTToken = await generateJWT(adminUser);
-    normalUser = await createTestUser({
+    user = await createTestUser({
       username: 'normalUser',
     });
-    userJWTToken = await generateJWT(normalUser);
+    userJWTToken = await generateJWT(user);
   });
 
   jest.setTimeout(10000);
   test('Creating user', async () => {
-    const user = {
+    const userData = {
       username: 'Thinger',
       firstName: 'Dolly',
       lastName: 'Gardner',
@@ -36,32 +36,32 @@ describe('User', () => {
 
     const response = await request(app)
       .post('/api/user')
-      .field('username', user.username)
-      .field('firstName', user.firstName)
-      .field('lastName', user.lastName)
+      .field('username', userData.username)
+      .field('firstName', userData.firstName)
+      .field('lastName', userData.lastName)
       .set('Authorization', adminJWTToken)
       .attach('avatar', 'tests/static/test.jpg')
       .attach('video', 'tests/static/test.mp4');
 
     expect(response.status).toBe(200);
     expect(response.body).toContainEntries([
-      ['username', user.username],
+      ['username', userData.username],
       ['role', 'user'],
-      ['firstName', user.firstName],
-      ['lastName', user.lastName],
+      ['firstName', userData.firstName],
+      ['lastName', userData.lastName],
     ]);
   });
 
   test('Getting one user', async () => {
     const response = await request(app)
-      .get(`/api/user/${normalUser.id}`)
+      .get(`/api/user/${user.id}`)
       .set('Authorization', userJWTToken);
     expect(response.status).toBe(200);
     expect(response.body).toContainEntries([
-      ['username', normalUser.username],
-      ['role', normalUser.role],
-      ['firstName', normalUser.firstName],
-      ['lastName', normalUser.lastName],
+      ['username', user.username],
+      ['role', user.role],
+      ['firstName', user.firstName],
+      ['lastName', user.lastName],
     ]);
     expect(response.body).not.toContainKeys(['avatar', 'video']);
   });
@@ -101,7 +101,7 @@ describe('User', () => {
 
   test('Updating user', async () => {
     const response = await request(app)
-      .patch(`/api/user/${normalUser!.id}`)
+      .patch(`/api/user/${user!.id}`)
       .attach('avatar', 'tests/static/test.jpg')
       .attach('video', 'tests/static/test.mp4')
       .set('Authorization', adminJWTToken);
@@ -109,22 +109,22 @@ describe('User', () => {
     expect(response.status).toBe(200);
     expect(response.body).toStrictEqual({});
 
-    const updatedUser = await UserModel.findById(normalUser!.id);
+    const updatedUser = await UserModel.findById(user!.id);
 
     expect(updatedUser).not.toBeNull();
-    expect(updatedUser!.avatar).not.toBe(normalUser!.avatar);
-    expect(updatedUser!.video).not.toBe(normalUser!.video);
-    expect(updatedUser!.username).toBe(normalUser!.username);
-    expect(updatedUser!.firstName).toBe(normalUser!.firstName);
-    expect(updatedUser!.lastName).toBe(normalUser!.lastName);
+    expect(updatedUser!.avatar).not.toBe(user!.avatar);
+    expect(updatedUser!.video).not.toBe(user!.video);
+    expect(updatedUser!.username).toBe(user!.username);
+    expect(updatedUser!.firstName).toBe(user!.firstName);
+    expect(updatedUser!.lastName).toBe(user!.lastName);
   });
 
   test('Deleting user', async () => {
     const response = await request(app)
-      .delete(`/api/user/${normalUser._id}`)
+      .delete(`/api/user/${user._id}`)
       .set('Authorization', adminJWTToken);
 
-    const emptyUser = await UserModel.findById(normalUser._id);
+    const emptyUser = await UserModel.findById(user._id);
 
     expect(emptyUser).toBeNull();
     expect(response.status).toBe(200);

@@ -1,11 +1,12 @@
-import userController from './user.controller';
-import tokenController from './token.controller';
-import videoController from './video.controller';
 import adminController from './admin.controller';
-import pinController from './pin.controller';
 import avatarController from './avatar.controller';
-import vodkaController from './vodka.controller';
+import musicController from './music.controller';
+import pinController from './pin.controller';
 import surveyController from './survey.controller';
+import tokenController from './token.controller';
+import userController from './user.controller';
+import videoController from './video.controller';
+import vodkaController from './vodka.controller';
 
 export {
   userController,
@@ -15,5 +16,6 @@ export {
   pinController,
   avatarController,
   vodkaController,
-  surveyController
+  surveyController,
+  musicController,
 };

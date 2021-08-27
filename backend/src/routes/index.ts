@@ -1,12 +1,13 @@
-import userRoute from './user.route';
-import tokenRoute from './token.route';
-import docsRoute from './docs.route';
-import videoRoute from './video.route';
 import adminRoute from './admin.route';
-import pinRoute from './pin.route';
 import avatarRoute from './avatar.route';
-import vodkaRoute from './vodka.route';
+import docsRoute from './docs.route';
+import musicRoute from './music.route';
+import pinRoute from './pin.route';
 import surveyRoute from './survey.route';
+import tokenRoute from './token.route';
+import userRoute from './user.route';
+import videoRoute from './video.route';
+import vodkaRoute from './vodka.route';
 
 export default {
   docs: docsRoute,
@@ -19,5 +20,6 @@ export default {
     avatarRoute,
     vodkaRoute,
     surveyRoute,
+    musicRoute,
   ],
 };

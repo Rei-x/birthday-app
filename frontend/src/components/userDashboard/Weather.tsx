@@ -8,8 +8,12 @@ const Weather = () => (
       <p className="text-muted">dnia osiemnastki</p>
     </div>
     <div className="d-flex">
-      <img src="https://openweathermap.org/img/w/01d.png" alt="weather icon" />
-      <p className="weather__temperature">23°C</p>
+      <img
+        className="weather__icon"
+        src="https://i.imgur.com/Boclt0J.png"
+        alt="weather icon"
+      />
+      <p className="weather__temperature">19°C</p>
     </div>
   </Widget>
 );

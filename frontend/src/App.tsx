@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import {
-  Route,
-  BrowserRouter as Router,
-  Switch,
-  Redirect,
-} from 'react-router-dom';
 import jwtDecode from 'jwt-decode';
+import React, { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-bootstrap';
-import Navbar from './components/Navbar';
-import './app.scss';
-import * as views from './views';
-import { UserContext } from './contexts';
-import { NotificationInterface } from './interfaces';
-import { useApi } from './hooks';
-import { Toast, Footer, Loading } from './components';
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from 'react-router-dom';
 import { GlobalContextInterface } from './api';
+import './app.scss';
+import { Footer, Loading, Toast } from './components';
+import Navbar from './components/Navbar';
+import { UserContext } from './contexts';
+import { useApi } from './hooks';
+import { NotificationInterface } from './interfaces';
+import * as views from './views';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -28,7 +28,7 @@ const App = () => {
         { title, children },
       ]);
     },
-    apiClient: undefined,
+    party: new Date('08/28/2021 18:00:00') < new Date(),
   });
   const api = useApi(context, setContext);
 
@@ -72,7 +72,10 @@ const App = () => {
           );
           localStorage.clear();
           setContext((oldContext) => ({
-            addNotification: oldContext.addNotification,
+            ...oldContext,
+            user: undefined,
+            apiClient: undefined,
+            JWT: undefined,
           }));
         }
         setLoading(false);
@@ -128,6 +131,9 @@ const App = () => {
           </Route>
           <Route path="/accompaniment">
             <views.AccompanimentView />
+          </Route>
+          <Route path="/music">
+            <views.MusicView />
           </Route>
           <Route path="*">
             <views.NotFoundView />

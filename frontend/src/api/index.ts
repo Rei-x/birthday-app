@@ -2,8 +2,15 @@ import jwt_decode from 'jwt-decode';
 import ky from 'ky';
 import { BASE_URL } from '../config';
 import {
-  AdminPaginatedUsers, JWTInterface, PinInterface, RedeemTokenInterface, SurveyResult, UserInterface, UserPaginatedUsers,
-  VodkaData
+  AdminPaginatedUsers,
+  JWTInterface,
+  MusicURL,
+  PinInterface,
+  RedeemTokenInterface,
+  SurveyResult,
+  UserInterface,
+  UserPaginatedUsers,
+  VodkaData,
 } from '../interfaces';
 
 export interface GlobalContextInterface {
@@ -11,6 +18,7 @@ export interface GlobalContextInterface {
   user?: UserInterface;
   addNotification: (title: string, children: React.ReactNode) => void;
   apiClient?: Api;
+  party: boolean;
 }
 
 class Api {
@@ -120,7 +128,9 @@ class Api {
   }
 
   async getSurveyResult(userId?: string): Promise<SurveyResult> {
-    return this.client.get(`api/survey/result/${userId || ""}`).json<SurveyResult>();
+    return this.client
+      .get(`api/survey/result/${userId || ''}`)
+      .json<SurveyResult>();
   }
 
   static async sendSurvey(PostId: string, survey: any) {
@@ -139,6 +149,14 @@ class Api {
 
   async getVodkaPoll() {
     return this.client.get('api/vodka-poll').json<VodkaData>();
+  }
+
+  async getMusicURL() {
+    return (await this.client.get('api/music').json<MusicURL>()).url;
+  }
+
+  async updateMusicURL(url: string) {
+    return this.client.post('api/music', { json: { url } });
   }
 }
 

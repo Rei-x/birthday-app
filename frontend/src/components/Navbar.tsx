@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
-import { Nav, Navbar, Container } from 'react-bootstrap';
+import { Container, Nav, Navbar } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Link } from 'react-router-dom';
 import logo from '../assets/18Barka.png';
 import { UserContext } from '../contexts';
 
@@ -11,7 +10,10 @@ const Navigation = () => {
   const logout = () => {
     if (setContext) {
       setContext((oldContext) => ({
-        addNotification: oldContext.addNotification,
+        ...oldContext,
+        user: undefined,
+        JWT: undefined,
+        apiClient: undefined,
       }));
     }
     localStorage.clear();
@@ -26,9 +28,11 @@ const Navigation = () => {
       className="fixed-top"
     >
       <Container>
-        <Navbar.Brand as={Link} to="/">
-          <img src={logo} alt="logo" width="150" />
-        </Navbar.Brand>
+        <LinkContainer to="/">
+          <Navbar.Brand>
+            <img src={logo} alt="logo" width="150" />
+          </Navbar.Brand>
+        </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
@@ -48,6 +52,11 @@ const Navigation = () => {
                 <LinkContainer to="/guest-list">
                   <Nav.Link>Lista gości</Nav.Link>
                 </LinkContainer>
+                {context.party && (
+                  <LinkContainer to="/music">
+                    <Nav.Link>DJ&apos;ka</Nav.Link>
+                  </LinkContainer>
+                )}
               </>
             )}
           </Nav>

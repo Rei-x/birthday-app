@@ -9,6 +9,7 @@ import FaqView from './Faq';
 import VideoView from './Video';
 import GuestsListView from './GuestList';
 import AccompanimentView from './Accompaniment';
+import MusicView from './Music';
 
 export {
   MainView,
@@ -22,4 +23,5 @@ export {
   VideoView,
   GuestsListView,
   AccompanimentView,
+  MusicView,
 };

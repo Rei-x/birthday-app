@@ -1,6 +1,7 @@
 import CreateUserForm from './admin/CreateUserForm';
 import SurveyResult from './admin/SurveyResult';
 import UsersTable from './admin/UsersTable';
+import MusicForm from './admin/MusicForm';
 import Avatar from './Avatar';
 import Footer from './Footer';
 import Loading from './Loading';
@@ -16,12 +17,15 @@ import TimeRemainingWidget from './userDashboard/TimeRemaining';
 import VideoWidget from './userDashboard/Video';
 import VodkaPollWidget from './userDashboard/VodkaPoll';
 import WeatherWidget from './userDashboard/Weather';
+import MapWidget from './userDashboard/Map';
+import MusicWidget from './userDashboard/Music';
 import Widget from './userDashboard/Widget';
 
 export {
   Navbar,
   CreateUserForm,
   UsersTable,
+  MusicForm,
   SurveyResult,
   Modal,
   NotFoundMessage,
@@ -36,6 +40,8 @@ export {
   AttendanceWidget,
   PollWidget,
   VideoWidget,
+  MapWidget,
+  MusicWidget,
   Footer,
   Loading,
 };
